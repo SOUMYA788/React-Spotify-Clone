@@ -1,46 +1,30 @@
 import { Box, Typography } from '@mui/material'
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useState } from 'react'
+import { TrackCard } from '../'
 import "./TrackLists.css"
 const TrackLists = ({ tracksArr }) => {
+    if(!tracksArr) return "Loading..."
+    const formatMs = (ms) => {
+        if (ms) {
+            let sec = Math.floor(ms / 1000);
+            let min = sec >= 60 ? Math.floor(sec / 60) : 0;
+            let restSec = sec ? (sec % 60) : 0;
+            let hour = min >= 60 ? Math.floor(min / 60) : 0;
+            let restMin = min ? (min % 60) : 0;
+            hour = hour < 10 ? `0${hour}` : hour;
+            restMin = restMin < 10 ? `0${restMin}` : restMin
+            restSec = restSec < 10 ? `0${restSec}` : restSec
+
+            let duration = hour > 0 ? `${hour}:${restMin}:${restSec}` : `${restMin}:${restSec}`;
+            console.log(duration)
+            return duration;
+        }
+    }
     return (
         <Box>
             {
                 tracksArr.map((tracksDetails) => {
-                    return (
-                        <Box sx={{
-                            display: "flex",
-                            flexDirection: "row",
-                            alignItem: "center",
-                            justifyContent: "flex-start"
-                        }}>
-                            <Typography
-                                component="h2" variant='h2'
-                                sx={{ fontSize: "1em" }}>
-                                {tracksDetails?.track_number}
-                            </Typography>
-                            <Box>
-                                <Typography component="p" variant='p'
-                                    sx={{ fontSize: "1em", display:"flex", flexDirection:"row" }}>
-                                    {
-
-                                        tracksDetails?.artists.map(({ id, name }, indx) => {
-                                            return (
-                                                <>
-                                                    <Link to={`/artist/${id}`} key={`${name}_${indx}`}>
-                                                        {name}
-                                                    </Link>
-                                                    {indx < (tracksDetails?.artists.length - 1) && ","}
-                                                </>
-                                            )
-                                        })
-
-                                    }
-                                </Typography>
-                            </Box>
-                            
-                        </Box>
-                    )
+                    return (<TrackCard tracksDetails={tracksDetails} />)
                 })
             }
         </Box >
