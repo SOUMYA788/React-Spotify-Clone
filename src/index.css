@@ -28,6 +28,13 @@ body {
   justify-content: center;
 }
 
+.hr_w80_h1_black40{
+  background-color: #A4A6A6;
+  width: 80%;
+  height: 1px;
+  margin: 5px auto;
+}
+
 ::-webkit-scrollbar {
   width: 0px;
   height: 0px;

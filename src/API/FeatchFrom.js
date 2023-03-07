@@ -6,7 +6,8 @@ export async function FeatchFrom(url) {
   const options = {
     headers: {
       'X-RapidAPI-Key': process.env.REACT_APP_API_KEY,
-      'X-RapidAPI-Host': 'spotify81.p.rapidapi.com'
+      'X-RapidAPI-Host': 'spotify81.p.rapidapi.com',
+      'Content-Type':'application/json'
     }
   };
   let { data } = await axios.get(`${BASE_URL}/${url}`, options);

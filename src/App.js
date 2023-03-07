@@ -1,39 +1,69 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Stack } from '@mui/system';
 import './App.css';
-import { Album, Home, Navigation, SearchBar, TrackCard } from './components';
+import { Album, Home, Login, Navigation, SearchBar } from './components';
 import { Box } from '@mui/material';
-import { useState, useEffect } from 'react';
+import { useCurrentState } from './Service/Context';
+import { useEffect } from 'react';
+import { getToken } from './Service/Spotify/Authentication';
+import { getAllPlaylists, getRecentPlayedAlbums } from './Service/Spotify/API';
 
 function App() {
-  const [musicId, setMusicId] = useState(null)
-
-  const [musicData, setMusicData] = useState(null)
-
+  const [{ token }, dispatch] = useCurrentState();
   useEffect(() => {
+    const recevedToken = getToken();
+    window.location.hash = '';
 
-  }, [musicId])
+    if (!token) {
+      dispatch({
+        type: 'SET_TOKEN',
+        token: recevedToken
+      });
+    }
 
+    if (token) {
 
+      getAllPlaylists(token).then((data) => {
+        dispatch({
+          type: 'SET_PLAYLISTS',
+          playlists: data
+        })
+      })
+
+      getRecentPlayedAlbums(token).then((recent_albums) => {
+        dispatch({
+          type: 'SET_RECENT_ALBUMS',
+          recentAlbums: recent_albums
+        })
+      }).catch((err) => {
+        console.log(err);
+      })
+
+    }
+
+  }, [token])
+
+  const appMainStackStyle = {
+    width: "100vw",
+    height: "100vh"
+  }
   return (
     <Router>
-      <Stack direction="row">
-        <Navigation />
-        <Box sx={{ height: "100vh", width: "100%", flex: "1", padding: "5px", display: "flex", flexDirection: "column" }}>
-          <Box sx={{ width: "100%", height: "50px", padding: "5px" }}>
+      <Stack sx={appMainStackStyle} direction="row">
+        {token && <Navigation />}
+        <Box sx={{ height: "100vh", width: "100%", flex: "1", display: "flex", flexDirection: "column" }}>
+          {token && <Box sx={{ width: "100%", height: "50px" }}>
             <SearchBar />
-          </Box>
+          </Box>}
           <Box sx={{ flex: "1", overflowY: "scroll", scrollBehavior: "smooth" }}>
             <Routes>
-              <Route path='/' element={<Home />} />
+              <Route path='/' element={token ? <Home /> : <Login />} />
               <Route path='/album/:albumId' element={<Album />} />
             </Routes>
           </Box>
-          {
-            musicData && <Box sx={{ width: "100%", height: "55px", background: "#bebebe" }}>
-              <TrackCard callFrom="app" setMusicId={setMusicId} tracksDetails={setMusicData} />
-            </Box>
-          }
+
+          {token && <Box sx={{ width: "100%", height: "55px", background: "#bebebe" }}>
+          </Box>}
         </Box>
       </Stack>
     </Router>

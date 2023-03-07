@@ -1,20 +1,34 @@
-import { List, ListItem, ListItemIcon, ListItemText, Typography } from '@mui/material'
+import { Typography } from '@mui/material'
 import { Home, Search, LibraryMusic } from '@mui/icons-material/';
 import { Box } from '@mui/system'
 import React from 'react'
+import { useCurrentState } from '../Service/Context';
+import { NavLists } from './NavLists/NavLists';
 
 const Navigation = () => {
+	const [{ playlists }, dispatch] = useCurrentState();
 
-	const listItemStyle = {
-		width: "120px",
-		cursor: "pointer"
-	}
+	const navListArr = [
+		{
+			title: 'Home',
+			Icon: Home
+		},
+		{
+			title: 'Search',
+			Icon: Search
+		},
+		{
+			title: 'Library',
+			Icon: LibraryMusic
+		}
+	]
 
-	const listItemIconStyle = {
-		color: "white",
-		marginRight: "20px",
-		width: "25px",
-		height: "25px"
+	const navListsMainBoxStyle = {
+		display: "flex",
+		flexDirection: "column",
+		alignItems: "center",
+		justifyContent: "center",
+		gap: "20px"
 	}
 
 	return (
@@ -43,24 +57,32 @@ const Navigation = () => {
 
 			</Box>
 
-			<Box sx={{marginTop:"20px"}}>
-				<List className="list" sx={{display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center", gap:"20px"}}>
-					<ListItem disablePadding sx={listItemStyle}>
-						<Home sx={listItemIconStyle} />
-						<Typography sx={{ color: "white", fontSize: "1.2em" }}>Home</Typography>
-					</ListItem>
-					<ListItem disablePadding sx={listItemStyle}>
-						<Search sx={listItemIconStyle} />
-						<Typography sx={{ color: "white", fontSize: "1.2rem" }}>Search</Typography>
-					</ListItem>
-					<ListItem disablePadding sx={listItemStyle}>
-						<LibraryMusic sx={listItemIconStyle} />
-						<Typography sx={{ color: "white", fontSize: "1.2rem" }}>Library</Typography>
-					</ListItem>
-				</List>
+			<Box sx={{ marginTop: "20px" }}>
+				<Box className='navigation_mainNav' sx={navListsMainBoxStyle}>
+					{
+						navListArr.map(({ title, Icon }, indx) => (
+							<NavLists Icon={Icon} title={title} key={`${title}_${indx}`} />
+						))
+					}
+				</Box>
+				<Box sx={{
+					marginTop: '30px',
+				}}>
+					<Typography component='h2' variant='h2' sx={{ color: "white", fontSize: "1em", width: "80%", margin: "0 auto" }}>
+						PLAYLISTS
+					</Typography>
+
+					<div className='hr_w80_h1_black40' />
+
+					{
+						playlists && playlists.map((playlistsData, indx) => (
+							<NavLists title={playlistsData.name} bottomMargin={true} key={`playlist_${indx}`} />
+						))
+					}
+				</Box>
 			</Box>
 		</Box>
 	)
 }
 
-export {Navigation}
+export { Navigation }

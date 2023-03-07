@@ -4,8 +4,12 @@ import React from 'react'
 import { Link } from 'react-router-dom';
 import "./AlbumCard.css"
 
-const AlbumCard = (props) => {
-  const { usedInList, albumUri, albumName, albumArtist, albumCoverArt, albumLabel, albumDate, albumCopyrights } = props;
+const AlbumCard = ({ albumCardData }) => {
+  const { usedInList, albumUri, albumName, albumArtist, albumCoverArt, albumLabel, albumDate, albumCopyrights } = albumCardData;
+
+  albumCardData && console.log(albumCardData)
+
+
   const setAlbumId = (albumUri) => {
     if (albumUri.includes(":")) {
       return (`/album/${albumUri.split(":")[2]}`);
@@ -13,21 +17,27 @@ const AlbumCard = (props) => {
       return (albumUri);
     }
   }
-  console.log("getting card also");
-  return (
-    <Box sx={{
-      width: {
-        xs: usedInList ? "75%" : "100%",
-        sm: usedInList ? "30%" : "100%"
-      },
-      display: "flex",
-      flexDirection: {
-        xs: "column",
-        sm: usedInList ? "column" : "row",
-      },
-      margin:usedInList && "1%"
 
-    }}>
+  console.log("getting card also");
+
+  // STYLES
+
+  const albumCardMainBoxStyle = {
+    width: {
+      xs: usedInList ? "75%" : "100%",
+      sm: usedInList ? "30%" : "100%"
+    },
+    display: "flex",
+    flexDirection: {
+      xs: "column",
+      sm: usedInList ? "column" : "row",
+    },
+    margin: usedInList && "1%"
+
+  }
+
+  return (
+    <Box sx={albumCardMainBoxStyle}>
       <Box sx={{ margin: !usedInList ? "0 10px 0 0" : "0 0 5px" }}>
         <Link className='component_link' to={setAlbumId(albumUri)}>
           <Box component="img" src={albumCoverArt} sx={{
@@ -107,9 +117,9 @@ const AlbumCard = (props) => {
             }
           }}>
           {
-            albumArtist.map((artistElement) => (
-              artistElement?.profile?.name || artistElement?.name
-            ))
+            albumArtist && albumArtist.map((artistElement) => {
+              console.log(artistElement?.name)
+            })
           }
         </Typography>
 

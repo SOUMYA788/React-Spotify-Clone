@@ -1,9 +1,13 @@
 import { Box, Typography } from '@mui/material'
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { useContext } from 'react';
+import { AppContext } from '../../../Service/Context'; 
+
 import "./TrackCard.css"
 
 const TrackCard = ({ callFrom, tracksDetails }) => {
+    const {setTrackId} = useContext(AppContext)
     if (!tracksDetails) return "Loading";
     console.log(tracksDetails);
     const formatMs = (ms) => {
@@ -39,7 +43,7 @@ const TrackCard = ({ callFrom, tracksDetails }) => {
                     backgroundColor: "#e3e3e3",
                     cursor: "pointer"
                 }
-            }} >
+            }} onClick = {()=>{setTrackId(tracksDetails?.id)}}>
 
             <Box sx={{
                 flex: "0.2",

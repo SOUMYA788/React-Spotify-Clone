@@ -3,7 +3,8 @@ import React from 'react'
 import { AlbumCard } from '../'
 
 const AlbumList = ({ albumListData }) => {
-    console.log("Album List get the data")
+    albumListData && console.log('albumListData -> ', albumListData);
+
     return (
         <Box sx={{
             display: "flex",
@@ -18,22 +19,16 @@ const AlbumList = ({ albumListData }) => {
         }}>
             {
                 albumListData.map((cardDataElement, indx) => {
-                    let album_uri = cardDataElement?.data?.uri;
-                    let album_name = cardDataElement?.data?.name;
-                    let album_artist = cardDataElement?.data?.artists?.items;
-                    let album_cover_art = cardDataElement?.data?.coverArt?.sources[0]?.url;
-                    let album_date = cardDataElement?.data?.date?.year;
-                   
+                    let albumCardData = {
+                        usedInList: true,
+                        albumUri: cardDataElement?.track?.album?.id,
+                        albumName: cardDataElement?.track?.album?.name,
+                        albumArtists: cardDataElement?.track?.album?.artists,
+                        albumDate: cardDataElement?.track?.album?.release_date,
+                        albumCoverArt: cardDataElement?.track?.album?.images[0]?.url
+                    }
                     return (
-                        <AlbumCard
-                            usedInList={true}
-                            albumUri={album_uri}
-                            albumName={album_name}
-                            albumArtist={album_artist}
-                            albumCoverArt={album_cover_art}
-                            albumDate={album_date}
-                            key={`${cardDataElement}_${indx}`}
-                        />
+                        <AlbumCard albumCardData={albumCardData} key={`${cardDataElement}_${indx}`} />
                     )
                 })
             }
@@ -41,4 +36,4 @@ const AlbumList = ({ albumListData }) => {
     )
 }
 
-export {AlbumList}
+export { AlbumList }
