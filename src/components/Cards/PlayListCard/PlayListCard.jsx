@@ -3,7 +3,6 @@ import { Box } from '@mui/system';
 import React from 'react'
 import "./PlayListCard.css"
 const PlayListCard = ({ playlist }) => {
-    playlist && console.log(playlist);
     return (
         <Box sx={{
             width: "100%",
@@ -12,7 +11,11 @@ const PlayListCard = ({ playlist }) => {
             alignItems: "center",
             background:"rgba(164, 166, 166, 0.5)",
             backdropFilter:"blur(10px)",
-            cursor:"pointer"
+            cursor:"pointer",
+            transition:"0.2s ease",
+            ":hover":{
+                background:"rgba(100, 100, 100, 0.5)",
+            }
         }}>
             <Box sx={{
                 width: "60px",

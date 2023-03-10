@@ -6,6 +6,8 @@ const PlayLists = ({ playListsData }) => {
     const playlistsMainBoxStyle = {
         width: "100%",
         display: "flex",
+        gap:"2%",
+        padding:"5px 2%",
         flexDirection: {
             xs: "column",
             sm: "row"
@@ -22,9 +24,9 @@ const PlayLists = ({ playListsData }) => {
                     <Box sx={{
                         width: {
                             xs:"80%",
-                            sm:"45%"
+                            sm:"49%"
                         },
-                        margin: "5px 2%",
+                        margin: "5px 0",
                     }} key={`playlistCard_${indx}`}>
                         <PlayListCard playlist={playlist} />
                     </Box>

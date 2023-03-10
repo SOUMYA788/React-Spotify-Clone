@@ -1,15 +1,17 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Stack } from '@mui/system';
 import './App.css';
-import { Album, Home, Login, Navigation, SearchBar } from './components';
+import { Album, ControlPannel, Home, Login, Navigation, SearchBar } from './components';
 import { Box } from '@mui/material';
 import { useCurrentState } from './Service/Context';
 import { useEffect } from 'react';
 import { getToken } from './Service/Spotify/Authentication';
-import { getAllPlaylists, getRecentPlayedAlbums } from './Service/Spotify/API';
+import { getAllPlaylists, getCurrentSong, getPlaybackState, getRecentPlayedAlbums } from './Service/Spotify/API';
 
 function App() {
-  const [{ token }, dispatch] = useCurrentState();
+
+  const [{ token, currentlyPlaying }, dispatch] = useCurrentState();
+
   useEffect(() => {
     const recevedToken = getToken();
     window.location.hash = '';
@@ -20,7 +22,6 @@ function App() {
         token: recevedToken
       });
     }
-
     if (token) {
 
       getAllPlaylists(token).then((data) => {
@@ -39,9 +40,27 @@ function App() {
         console.log(err);
       })
 
+      getCurrentSong(token).then((data) => {
+        console.log('get the current playing data...', data);
+        if (data?.currently_playing_type === 'track') {
+          dispatch({
+            type: 'SET_CURRENT_PLAYING',
+            currentlyPlaying: data
+          })
+        }
+      }).catch((err) => {
+        console.log('error occoured in control pannel line 12');
+        console.log(err);
+      });
+
+      getPlaybackState(token).then((data) => {
+        console.log('playback_state -> ', data)
+      })
+
     }
 
   }, [token])
+
 
   const appMainStackStyle = {
     width: "100vw",
@@ -62,8 +81,11 @@ function App() {
             </Routes>
           </Box>
 
-          {token && <Box sx={{ width: "100%", height: "55px", background: "#bebebe" }}>
-          </Box>}
+          {
+            token && <Box sx={{ width: "100%", height: "80px", padding: "5px", background: "#bebebe" }}>
+              <ControlPannel userToken={token} currentMusic={currentlyPlaying} />
+            </Box>
+          }
         </Box>
       </Stack>
     </Router>

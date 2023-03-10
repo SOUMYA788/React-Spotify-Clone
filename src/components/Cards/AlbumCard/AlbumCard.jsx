@@ -7,25 +7,28 @@ import "./AlbumCard.css"
 const AlbumCard = ({ albumCardData }) => {
   const { usedInList, albumUri, albumName, albumArtist, albumCoverArt, albumLabel, albumDate, albumCopyrights } = albumCardData;
 
-  albumCardData && console.log(albumCardData)
+  const artistArr = []
 
+  albumCardData?.albumArtist && albumCardData?.albumArtist.map((artist) => {
+    artistArr.push(artist.name)
+  })
 
   const setAlbumId = (albumUri) => {
-    if (albumUri.includes(":")) {
-      return (`/album/${albumUri.split(":")[2]}`);
-    } else {
-      return (albumUri);
+    if (albumUri) {
+      if (albumUri.includes(":")) {
+        return (`/album/${albumUri.split(":")[2]}`);
+      } else {
+        return (`/album/${albumUri}`);
+      }
     }
   }
-
-  console.log("getting card also");
 
   // STYLES
 
   const albumCardMainBoxStyle = {
     width: {
       xs: usedInList ? "75%" : "100%",
-      sm: usedInList ? "30%" : "100%"
+      sm: usedInList ? "20%" : "100%"
     },
     display: "flex",
     flexDirection: {
@@ -39,7 +42,7 @@ const AlbumCard = ({ albumCardData }) => {
   return (
     <Box sx={albumCardMainBoxStyle}>
       <Box sx={{ margin: !usedInList ? "0 10px 0 0" : "0 0 5px" }}>
-        <Link className='component_link' to={setAlbumId(albumUri)}>
+        <Link className='component_link' to={setAlbumId(albumCardData?.albumUri)}>
           <Box component="img" src={albumCoverArt} sx={{
             width: usedInList ? "100%" : "150px",
             height: !usedInList && "150px"
@@ -62,28 +65,30 @@ const AlbumCard = ({ albumCardData }) => {
             }
           }}
         >
-          {albumName}
-        </Typography>
-
-        <Typography
-          component="h2"
-          variant='h2'
-          sx={{
-            margin: {
-              xs: "2px 0",
-              sm: "0 0 2px"
-            },
-            fontSize: {
-              xs: "1em",
-              sm: usedInList ? "1em" : "17px",
-            }
-          }}
-        >
-          {albumLabel}
+          {albumCardData && albumCardData?.albumName}
         </Typography>
 
         {
-          albumCopyrights && albumCopyrights.map((artistElement, indx) => (
+          albumLabel && <Typography
+            component="h2"
+            variant='h2'
+            sx={{
+              margin: {
+                xs: "2px 0",
+                sm: "0 0 2px"
+              },
+              fontSize: {
+                xs: "1em",
+                sm: usedInList ? "1em" : "17px",
+              }
+            }}
+          >
+            {albumCardData && albumCardData?.albumLabel}
+          </Typography>
+        }
+
+        {
+          albumCardData?.copyrights && albumCardData?.copyrights.map((copyrightElem, indx) => (
             <Typography
               component="p"
               variant='p'
@@ -98,12 +103,12 @@ const AlbumCard = ({ albumCardData }) => {
                 }
               }}
               key={`${indx}`}>
-              {artistElement.text}
+              {copyrightElem.text}
             </Typography>
           ))
         }
 
-        <Typography
+        {artistArr.length > 0 && <Typography
           component="p"
           variant='p'
           sx={{
@@ -117,13 +122,11 @@ const AlbumCard = ({ albumCardData }) => {
             }
           }}>
           {
-            albumArtist && albumArtist.map((artistElement) => {
-              console.log(artistElement?.name)
-            })
+            artistArr.toString()
           }
-        </Typography>
+        </Typography>}
 
-        <Typography component="p" variant='p' sx={{
+        {albumCardData?.albumDate && <Typography component="p" variant='p' sx={{
           fontSize: {
             xs: "1em",
             sm: usedInList ? "1em" : "17px",
@@ -132,8 +135,8 @@ const AlbumCard = ({ albumCardData }) => {
             sm: "0 0 2px"
           }
         }}>
-          {new Date(albumDate).getFullYear()}
-        </Typography>
+          {new Date(albumCardData?.albumDate).getFullYear()}
+        </Typography>}
 
       </Box>
     </Box>

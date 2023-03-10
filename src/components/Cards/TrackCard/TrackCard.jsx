@@ -66,18 +66,16 @@ const TrackCard = ({ callFrom, tracksDetails }) => {
                 <Typography component="p" variant='p'
                     sx={{ fontSize: "1em", display: "flex", flexDirection: "row" }}>
                     {
-
                         tracksDetails?.artists.map(({ id, name }, indx) => {
                             return (
                                 <>
                                     <Link className="trackList_artistLinks" to={`/artist/${id}`} key={`${name}_${indx}`}>
                                         {name}
                                     </Link>
-                                    {indx < (tracksDetails?.artists.length - 1) && <span>,&nbsp;</span>}
+                                    {indx < (tracksDetails?.artists.length - 1) && <span key={`span_${name}_${indx}`}>,&nbsp;</span>}
                                 </>
                             )
                         })
-
                     }
                 </Typography>
             </Box>
@@ -87,7 +85,6 @@ const TrackCard = ({ callFrom, tracksDetails }) => {
                     {formatMs(tracksDetails?.duration_ms)}
                 </Typography>
             </Box>
-
         </Box>
     )
 }
