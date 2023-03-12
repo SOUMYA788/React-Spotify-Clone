@@ -1,7 +1,8 @@
 export const reducerData = {
     token: null,
-    playlists:[],
-    recentAlbums:[],
+    user: null,
+    playlists: [],
+    recentAlbums: [],
     currentlyPlaying: null,
 }
 
@@ -12,21 +13,31 @@ export const reducer = (state, action) => {
                 ...state,
                 token: action.token
             }
+
+        case 'SET_USER':
+            return {
+                ...state,
+                user: action.user
+            }
+
         case 'SET_PLAYLISTS':
-            return{
+            return {
                 ...state,
-                playlists:action.playlists
+                playlists: action.playlists
             }
+
         case 'SET_RECENT_ALBUMS':
-            return{
+            return {
                 ...state,
-                recentAlbums:action.recentAlbums
+                recentAlbums: action.recentAlbums
             }
+
         case 'SET_CURRENT_PLAYING':
-            return{
+            return {
                 ...state,
-                currentlyPlaying:action.currentlyPlaying
+                currentlyPlaying: action.currentlyPlaying
             }
+
         default:
             return state;
     }

@@ -2,15 +2,32 @@ import React, { useEffect, useState } from 'react'
 import { Box, Typography } from '@mui/material'
 import { FavoriteBorderRounded, PlayArrow, PlayCircle, PlayCircleFilledRounded, PauseCircleFilledRounded, ShuffleOutlined, SkipPreviousRounded, SkipNextRounded, RepeatRounded } from '@mui/icons-material/';
 import { useCurrentState } from '../../Service/Context';
-import { formatMs, playMusic } from '../../Service/Spotify/API';
+import { formatMs, playMusic, changeMusic } from '../../Service/Spotify/API';
 import "./ControlPannel.css"
+import { Alert } from '../Alert/Alert';
 
 const ControlPannel = ({ currentMusic }) => {
 
-    const [{ token }, dispatch] = useCurrentState()
+    const [{ token, user }, dispatch] = useCurrentState()
 
     const setMusicState = (musicStatus) => {
-        playMusic(token, musicStatus)
+        console.log(token);
+        playMusic(token, musicStatus).then((data) => {
+            console.log('playPause success -> ', data);
+        }).catch((err) => {
+            console.log('playPause error -> ', err);
+        })
+    }
+
+    const changeMusicTo = (changeState) => {
+        console.log(token);
+        changeMusic(token, changeState).then((data) => {
+            console.log('change music success -> ', data);
+        }).catch((err) => {
+            let reason = err?.response?.data?.error?.reason
+            console.log('change music error -> ', reason);
+
+        })
     }
 
     // initial plan, first pause music, if it's playing song in server, then seek to 0
@@ -28,11 +45,18 @@ const ControlPannel = ({ currentMusic }) => {
         flexDirection: "row",
         alignItems: "center",
     }
+    
     const controlPannelMainBox = {
         width: "100%",
         height: "100%",
         ...flexRowStyle,
         gap: "1%"
+    }
+
+    if (user?.product && user?.product === 'free') {
+        return (
+            <Alert message='This function require premium account of spotify' />
+        )
     }
 
     return (
@@ -134,37 +158,43 @@ const ControlPannel = ({ currentMusic }) => {
                     <ShuffleOutlined sx={{
                         width: "1em",
                         height: '1em',
-                        fontSize: "1.5em"
+                        fontSize: "1.5em",
+                        cursor: 'pointer'
                     }} />
 
                     <SkipPreviousRounded sx={{
                         width: "1em",
                         height: '1em',
-                        fontSize: "2.5em"
-                    }} />
+                        fontSize: "2.5em",
+                        cursor: 'pointer'
+                    }} onClick={() => { changeMusicTo('previous') }} />
 
                     {
                         currentMusic?.is_playing ? <PauseCircleFilledRounded sx={{
                             width: "1em",
                             height: '1em',
-                            fontSize: "3em"
+                            fontSize: "3em",
+                            cursor: 'pointer'
                         }} onClick={() => { setMusicState('pause') }} /> : <PlayCircleFilledRounded sx={{
                             width: "1em",
                             height: '1em',
-                            fontSize: "3em"
+                            fontSize: "3em",
+                            cursor: 'pointer'
                         }} onClick={() => { setMusicState('play') }} />
                     }
 
                     <SkipNextRounded sx={{
                         width: "1em",
                         height: '1em',
-                        fontSize: "2.5em"
-                    }} />
+                        fontSize: "2.5em",
+                        cursor: 'pointer'
+                    }} onClick={() => { changeMusicTo('next') }} />
 
                     <RepeatRounded sx={{
                         width: "1em",
                         height: '1em',
-                        fontSize: "1em"
+                        fontSize: "1em",
+                        cursor: 'pointer'
                     }} />
 
                 </Box>

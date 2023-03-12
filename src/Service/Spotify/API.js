@@ -26,11 +26,18 @@ const getOptions = (token) => {
   })
 }
 
+export async function getMe(token) {
+  let url = `https://api.spotify.com/v1/me`;
+  let options = getOptions(token);
+  let { data } = await axios.get(url, options)
+  return data
+}
+
 export async function getAllPlaylists(token) {
   let url = "https://api.spotify.com/v1/me/playlists";
   let options = getOptions(token);
-  let { data: { items } } = await axios.get(url, options);
-  return items;
+  let data = await axios.get(url, options);
+  return data;
 }
 
 export async function getRecentPlayedAlbums(token) {
@@ -99,5 +106,25 @@ export async function getPlaybackState(token) {
 export async function playMusic(token, musicStatus) {
   let url = `https://api.spotify.com/v1/me/player/${musicStatus}`;
   let options = getOptions(token);
-  await axios.put(url, {}, options)
+  let data = await axios.put(url, {}, options)
+  return data;
+}
+
+export async function changeMusic(token, changeState) {
+  let url = `https://api.spotify.com/v1/me/player/${changeState}`;
+  let options = {
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    }
+  };
+  let data = await axios.post(url, {}, options)
+  return data
+}
+
+export async function getArtist(token, artistId) {
+  let url = `https://api.spotify.com/v1/artists/${artistId}`;
+  let options = getOptions(token);
+  let data = await axios.get(url, options);
+  return data;
 }

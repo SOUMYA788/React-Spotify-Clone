@@ -1,12 +1,10 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { Stack } from '@mui/system';
 import './App.css';
-import { Album, ControlPannel, Home, Login, Navigation, SearchBar } from './components';
+import { Activate, Album, ControlPannel, Home, Login, Navigation, SearchBar } from './components';
 import { Box } from '@mui/material';
 import { useCurrentState } from './Service/Context';
 import { useEffect } from 'react';
 import { getToken } from './Service/Spotify/Authentication';
-import { getAllPlaylists, getCurrentSong, getPlaybackState, getRecentPlayedAlbums } from './Service/Spotify/API';
+import { getAllPlaylists, getCurrentSong, getMe, getPlaybackState, getRecentPlayedAlbums } from './Service/Spotify/API';
 
 function App() {
 
@@ -24,10 +22,19 @@ function App() {
     }
     if (token) {
 
-      getAllPlaylists(token).then((data) => {
+      getMe(token).then((data) => {
+        dispatch({
+          type: "SET_USER",
+          user: data
+        })
+      })
+
+      getAllPlaylists(token).then((responce) => {
+        let data = responce?.data
+        let items = data?.items
         dispatch({
           type: 'SET_PLAYLISTS',
-          playlists: data
+          playlists: items
         })
       })
 
@@ -62,33 +69,12 @@ function App() {
   }, [token])
 
 
-  const appMainStackStyle = {
-    width: "100vw",
-    height: "100vh"
-  }
   return (
-    <Router>
-      <Stack sx={appMainStackStyle} direction="row">
-        {token && <Navigation />}
-        <Box sx={{ height: "100vh", width: "100%", flex: "1", display: "flex", flexDirection: "column" }}>
-          {token && <Box sx={{ width: "100%", height: "50px" }}>
-            <SearchBar />
-          </Box>}
-          <Box sx={{ flex: "1", overflowY: "scroll", scrollBehavior: "smooth" }}>
-            <Routes>
-              <Route path='/' element={token ? <Home /> : <Login />} />
-              <Route path='/album/:albumId' element={<Album />} />
-            </Routes>
-          </Box>
-
-          {
-            token && <Box sx={{ width: "100%", height: "80px", padding: "5px", background: "#bebebe" }}>
-              <ControlPannel userToken={token} currentMusic={currentlyPlaying} />
-            </Box>
-          }
-        </Box>
-      </Stack>
-    </Router>
+    <Box sx={{ width: "100vw", height: "100vh" }} className='App'>
+      {
+        token ? <Activate currentSongData={currentlyPlaying} /> : <Login />
+      }
+    </Box>
   );
 }
 

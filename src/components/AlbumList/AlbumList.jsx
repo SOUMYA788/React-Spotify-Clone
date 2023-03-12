@@ -13,17 +13,17 @@ const AlbumList = ({ albumListData }) => {
                 return element
             }
         });
-        
+
         setUniqueAlbums(uniqueAlbumsData)
     }, [albumListData])
-    
+
     uniqueAlbums.length && console.log(uniqueAlbums);
 
     return (
         <Box sx={{
             display: "flex",
-            gap:"2%",
-            padding:"5px 2%",
+            gap: "2%",
+            padding: "5px 2%",
             flexDirection: {
                 xs: "column",
                 sm: "row"
@@ -43,7 +43,7 @@ const AlbumList = ({ albumListData }) => {
                         albumCoverArt: cardDataElement?.track?.album?.images[0]?.url
                     }
                     return (
-                        <AlbumCard albumCardData={albumCardData} key={`${cardDataElement}_${indx}`} />
+                        <AlbumCard usedInList={true} albumCardData={albumCardData} key={`${cardDataElement}_${indx}`} />
                     )
                 })
             }

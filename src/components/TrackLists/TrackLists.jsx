@@ -6,7 +6,13 @@ import "./TrackLists.css"
 const TrackLists = ({ tracksArr }) => {
     if (!tracksArr) return "Loading..."
     return (
-        <Box>
+        <Box sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            width: '100%',
+            gap: '5px',
+        }}>
             {
                 tracksArr.map((tracksDetails, indx) => {
                     return (<TrackCard tracksDetails={tracksDetails} key={`track_${indx}`} />)

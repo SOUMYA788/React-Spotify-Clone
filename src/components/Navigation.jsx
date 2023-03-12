@@ -4,6 +4,7 @@ import { Box } from '@mui/system'
 import React from 'react'
 import { useCurrentState } from '../Service/Context';
 import { NavLists } from './NavLists/NavLists';
+import { SearchBar } from './';
 
 const Navigation = () => {
 	const [{ playlists }, dispatch] = useCurrentState();
@@ -12,10 +13,6 @@ const Navigation = () => {
 		{
 			title: 'Home',
 			Icon: Home
-		},
-		{
-			title: 'Search',
-			Icon: Search
 		},
 		{
 			title: 'Library',
@@ -34,8 +31,9 @@ const Navigation = () => {
 	return (
 		<Box component="div" sx={{
 			width: "200px",
-			height: "100vh",
-			background: "black",
+			height: "100%",
+			background: "rgba(0,0,0,0.7)",
+			backdropFilter: 'blur(5px)',
 			padding: "10px 5px",
 		}}>
 
@@ -57,29 +55,30 @@ const Navigation = () => {
 
 			</Box>
 
+			<Box sx={{
+				width: "100%",
+				margin: "15px auto 0",
+				height: "35px"
+			}}>
+				<SearchBar />
+			</Box>
+
 			<Box sx={{ marginTop: "20px" }}>
-				<Box className='navigation_mainNav' sx={navListsMainBoxStyle}>
-					{
-						navListArr.map(({ title, Icon }, indx) => (
-							<NavLists Icon={Icon} title={title} key={`${title}_${indx}`} />
-						))
-					}
-				</Box>
-				<Box sx={{
-					marginTop: '30px',
-				}}>
-					<Typography component='h2' variant='h2' sx={{ color: "white", fontSize: "1em", width: "80%", margin: "0 auto" }}>
-						PLAYLISTS
-					</Typography>
+				{
+					(playlists.length > 0) && <Box sx={{
+						marginTop: '30px',
+					}}>
+						<Typography component='h2' variant='h2' sx={{ color: "white", fontSize: "1em", width: "80%", margin: "0 auto" }}>
+							PLAYLISTS
+						</Typography>
 
-					<div className='hr_w80_h1_black40' />
+						<div className='hr_w80_h1_black40' />
 
-					{
-						playlists && playlists.map((playlistsData, indx) => (
+						{playlists.map((playlistsData, indx) => (
 							<NavLists title={playlistsData.name} bottomMargin={true} key={`playlist_${indx}`} />
-						))
-					}
-				</Box>
+						))}
+					</Box>
+				}
 			</Box>
 		</Box>
 	)

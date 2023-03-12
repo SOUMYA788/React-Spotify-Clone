@@ -1,4 +1,4 @@
-import { KeyboardBackspaceRounded, Mic, Search } from '@mui/icons-material';
+import { Search } from '@mui/icons-material';
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import "./SearchBar.css"
@@ -13,28 +13,6 @@ const SearchBar = () => {
     setSearchValue("")
   }
 
-  const iconStyle = {
-    width: {
-      sm: "1.5em",
-      xs: "1.4em"
-    },
-    height: {
-      sm: "1.5em",
-      xs: "1.4em"
-    },
-    fontSize: {
-      sm: "1.5em",
-      xs: "1.4em"
-    },
-    padding: "5px",
-    borderRadius: "50%",
-    transition: "0.1s ease",
-    cursor: "pointer",
-    ":hover": {
-      backgroundColor: "#d3d3d3"
-    }
-  }
-
   const topNavSearchEnterBtnLogo = {
     width: "100%",
     height: "100%",
@@ -42,24 +20,7 @@ const SearchBar = () => {
     color: "#0f0f0f"
   }
   return (
-    <div id='topNavSearchDiv' className='navBoxShowHide'>
-      <KeyboardBackspaceRounded
-        id="search_BackIcon"
-        focusable="true"
-        tabIndex="1"
-        sx={{
-          display: {
-            xs: "inline-block",
-            sm: "none"
-          },
-          ...iconStyle,
-          marginRight: "5px"
-        }}
-        onFocus={() => {
-          document.getElementById("topNavSearchDiv").classList.remove("fullSearchBar")
-        }}
-      />
-
+    <div id='topNavSearchDiv'>
       <form className='searchForm' onSubmit={searchSubmit}>
         <input type="text" placeholder='Search' className='topNavSearchBar' value={searchValue} onChange={(e) => {
           setSearchValue(e.target.value)
@@ -69,7 +30,6 @@ const SearchBar = () => {
         </button>
       </form>
 
-      <Mic sx={iconStyle} title="voice search" />
     </div>
   )
 }

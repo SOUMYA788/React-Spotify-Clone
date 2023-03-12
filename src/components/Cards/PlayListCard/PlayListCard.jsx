@@ -9,12 +9,12 @@ const PlayListCard = ({ playlist }) => {
             display: "flex",
             flexDirection: "row",
             alignItems: "center",
-            background:"rgba(164, 166, 166, 0.5)",
-            backdropFilter:"blur(10px)",
+            background:"rgba(255, 255, 255, 0.15)",
+            backdropFilter:"blur(5px)",
             cursor:"pointer",
             transition:"0.2s ease",
             ":hover":{
-                background:"rgba(100, 100, 100, 0.5)",
+                background:"rgba(255, 255, 255, 0.3)",
             }
         }}>
             <Box sx={{
@@ -26,13 +26,13 @@ const PlayListCard = ({ playlist }) => {
                     width: "100%",
                     height: "100%",
                     objectFit: "contain"
-                }} component='img' src={playlist.images[0].url} />
+                }} component='img' src={playlist?.images[0]?.url} />
             </Box>
             <Box sx={{ flex: "1" }}>
                 <Typography component="h2" variant='h2' sx={{
                     fontSize: "1.5em"
                 }}>
-                    {playlist.name}
+                    {playlist?.name}
                 </Typography>
             </Box>
         </Box>

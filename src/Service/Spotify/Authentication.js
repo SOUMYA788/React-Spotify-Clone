@@ -5,18 +5,19 @@ const auth_scope = [
     'streaming',
     'user-modify-playback-state',
     'user-read-email',
+    'user-top-read',
+    'user-read-private',
     'user-read-currently-playing',
     'user-read-recently-played',
     'user-read-playback-state',
-    'user-top-read',
-    'user-read-private',
-    'user-read-playback-position'
+    'user-read-playback-position',
+    'playlist-read-private'
 ]
 // USED 'SPOTIFY WEB API NODE' LIBREARY by 'symplified dev'
 
 
-export const getToken = () => { 
-    return(window.location.hash.split('&')[0].split('=')[1])
+export const getToken = () => {
+    return (window.location.hash.split('&')[0].split('=')[1])
 }
 
 export const authUrl = `${auth_endpoint}?client_id=${client_id}&redirect_uri=${redirect_url}&scope=${auth_scope.join(" ")}&response_type=token&show_dialog=true`

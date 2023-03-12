@@ -35,8 +35,18 @@ const AlbumCard = ({ albumCardData }) => {
       xs: "column",
       sm: usedInList ? "column" : "row",
     },
-    margin: usedInList && "1%"
-
+    gap: "5px",
+    padding: "3% 1%",
+    borderRadius: "8px",
+    margin: {
+      xs: usedInList && "1% auto",
+      sm: usedInList && "1%",
+    },
+    transition: "0.2s ease",
+    background: "rgba(255, 255, 255, 0.5)",
+    ":hover": {
+      background: usedInList && "rgba(255, 255, 255, 0.8)",
+    }
   }
 
   return (
@@ -51,22 +61,27 @@ const AlbumCard = ({ albumCardData }) => {
       </Box>
 
       <Box >
-        <Typography
-          component="h2"
-          variant='h2'
-          sx={{
-            margin: {
-              xs: "5px 0",
-              sm: "0 0 5px"
-            },
-            fontSize: {
-              xs: "1.5em",
-              sm: usedInList ? "1em" : "25px",
-            }
-          }}
-        >
-          {albumCardData && albumCardData?.albumName}
-        </Typography>
+        <Link className='component_link' to={setAlbumId(albumCardData?.albumUri)}>
+          <Typography
+            component="h2"
+            variant='h2'
+            sx={{
+              margin: {
+                xs: "5px 0",
+                sm: "0 0 5px"
+              },
+              fontSize: {
+                xs: "1.5em",
+                sm: usedInList ? "1em" : "25px",
+              },
+              overflow: "hidden",
+              whiteSpace: 'nowrap',
+              textOverflow: 'ellipsis'
+            }}
+          >
+            {albumCardData && albumCardData?.albumName}
+          </Typography>
+        </Link>
 
         {
           albumLabel && <Typography

@@ -30,17 +30,18 @@ const TrackCard = ({ callFrom, tracksDetails }) => {
         <Box
             sx={{
                 width: "85%",
-                margin: "5px auto",
                 padding: "10px 0",
                 display: "flex",
                 gap: "2%",
                 flexDirection: "row",
                 alignItem: "center",
-                borderRadius: "10px",
+                borderRadius: "5px",
                 justifyContent: "flex-start",
                 transition: "0.2s ease",
+                background: 'rgba(255,255,255, 0.5)',
+                backdropFilter: 'blur(3px)',
                 ":hover": {
-                    backgroundColor: "#e3e3e3",
+                    backgroundColor: "rgba(255,255,255, 1)",
                     cursor: "pointer"
                 }
             }} onClick = {()=>{setTrackId(tracksDetails?.id)}}>
