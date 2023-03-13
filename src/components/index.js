@@ -9,7 +9,7 @@ export { SearchBar as SearchBar } from "./SearchBar/SearchBar"
 export { AlbumCard as AlbumCard } from "./Cards/AlbumCard/AlbumCard"
 export { Album as Album } from "./Pages/Album/Album"
 export { TrackLists as TrackLists } from "./TrackLists/TrackLists"
-export { TrackCard as TrackCard } from "./Cards/TrackCard/TrackCard"
+export { TrackCard } from "./Cards/TrackCard/TrackCard"
 export { ControlPannel } from './ControlPannel/ControlPannel'
 export { Alert } from './Alert/Alert'
 export { Activate } from './Activate/Activate'

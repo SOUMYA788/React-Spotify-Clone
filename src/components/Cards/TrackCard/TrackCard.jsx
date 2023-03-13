@@ -2,12 +2,12 @@ import { Box, Typography } from '@mui/material'
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { useContext } from 'react';
-import { AppContext } from '../../../Service/Context'; 
+import { AppContext } from '../../../Service/Context';
 
 import "./TrackCard.css"
 
-const TrackCard = ({ callFrom, tracksDetails }) => {
-    const {setTrackId} = useContext(AppContext)
+const TrackCard = ({ callFrom, tracksDetails, albumImg }) => {
+    const { setTrackId } = useContext(AppContext)
     if (!tracksDetails) return "Loading";
     console.log(tracksDetails);
     const formatMs = (ms) => {
@@ -32,11 +32,11 @@ const TrackCard = ({ callFrom, tracksDetails }) => {
                 width: "85%",
                 padding: "10px 0",
                 display: "flex",
-                gap: "2%",
                 flexDirection: "row",
                 alignItem: "center",
                 borderRadius: "5px",
-                justifyContent: "flex-start",
+                justifyContent: "space-evenly",
+                alignItems: "center",
                 transition: "0.2s ease",
                 background: 'rgba(255,255,255, 0.5)',
                 backdropFilter: 'blur(3px)',
@@ -44,10 +44,10 @@ const TrackCard = ({ callFrom, tracksDetails }) => {
                     backgroundColor: "rgba(255,255,255, 1)",
                     cursor: "pointer"
                 }
-            }} onClick = {()=>{setTrackId(tracksDetails?.id)}}>
+            }} onClick={() => { setTrackId(tracksDetails?.id) }}>
 
             <Box sx={{
-                flex: "0.2",
+                width: "40px",
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
@@ -60,11 +60,19 @@ const TrackCard = ({ callFrom, tracksDetails }) => {
                 </Typography>
             </Box>
 
-            <Box sx={{ flex: "0.8" }}>
+            <Box sx={{ width: "40px", padding: "2px", margin:'0 2% 0 0' }}>
+                <Box component='img' src={tracksDetails?.album?.images[0]?.url || albumImg} sx={{
+                    width: "100%",
+                    height: "100%",
+                    objectFit: 'contain',
+                }} />
+            </Box>
+
+            <Box sx={{ flex: "1" }}>
                 <Typography component="p" variant='p' sx={{ margin: "0 0 5px" }}>
                     {tracksDetails?.name}
                 </Typography>
-                <Typography component="p" variant='p'
+                {callFrom !== 'artist' && <Typography component="p" variant='p'
                     sx={{ fontSize: "1em", display: "flex", flexDirection: "row" }}>
                     {
                         tracksDetails?.artists.map(({ id, name }, indx) => {
@@ -78,10 +86,10 @@ const TrackCard = ({ callFrom, tracksDetails }) => {
                             )
                         })
                     }
-                </Typography>
+                </Typography>}
             </Box>
 
-            <Box sx={{ flex: "0.2", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
+            <Box sx={{ width: "80px", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
                 <Typography component="p" variant='p' sx={{ fontSize: "1em" }}>
                     {formatMs(tracksDetails?.duration_ms)}
                 </Typography>

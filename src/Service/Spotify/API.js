@@ -128,3 +128,10 @@ export async function getArtist(token, artistId) {
   let data = await axios.get(url, options);
   return data;
 }
+
+export async function getArtistTracks(token, artistId) {
+  let url = `https://api.spotify.com/v1/artists/${artistId}/top-tracks?market=ES`;
+  let options = getOptions(token);
+  let data = await axios.get(url, options);
+  return data;
+}

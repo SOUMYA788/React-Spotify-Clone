@@ -33,7 +33,7 @@ const Album = () => {
         {albumMeta && <AlbumCard albumCardData={albumMeta} />}
       </Box>
       <Box>
-        <TrackLists tracksArr={albumData} />
+        {albumMeta && <TrackLists tracksArr={albumData} albumImg = {albumMeta?.albumCoverArt} />}
       </Box>
     </Box>
   )

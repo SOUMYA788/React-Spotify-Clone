@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { TrackCard } from '../'
 import { formatMs } from '../../Service/Spotify/API'
 import "./TrackLists.css"
-const TrackLists = ({ tracksArr }) => {
+const TrackLists = ({ callFrom, tracksArr, albumImg }) => {
     if (!tracksArr) return "Loading..."
     return (
         <Box sx={{
@@ -15,7 +15,7 @@ const TrackLists = ({ tracksArr }) => {
         }}>
             {
                 tracksArr.map((tracksDetails, indx) => {
-                    return (<TrackCard tracksDetails={tracksDetails} key={`track_${indx}`} />)
+                    return (<TrackCard callFrom = {callFrom} tracksDetails={tracksDetails} albumImg={albumImg} key={`track_${indx}`} />)
                 })
             }
         </Box >

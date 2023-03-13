@@ -18,7 +18,7 @@ const Activate = ({ currentSongData }) => {
                 <Box sx={{
                     width: "100%",
                     height: "100%",
-                    background: 'url(/bg.jpg) no-repeat',
+                    background: 'url(/images/bg.jpg) no-repeat',
                     backgroundSize: "cover",
                     filter: "blur(1px)",
                     zIndex: "-10",
