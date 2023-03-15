@@ -135,3 +135,10 @@ export async function getArtistTracks(token, artistId) {
   let data = await axios.get(url, options);
   return data;
 }
+
+export async function getPlaylistData(token, playlistId) {
+  let url = `https://api.spotify.com/v1/playlists/${playlistId}`;
+  let options = getOptions(token);
+  let data = await axios.get(url, options);
+  return data;
+}

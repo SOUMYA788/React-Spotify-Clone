@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { useParams } from "react-router-dom";
 import { useCurrentState } from '../../../Service/Context';
 import { getArtist, getArtistTracks } from '../../../Service/Spotify/API';
-import { TrackCard, TrackLists } from '../../';
+import { TrackLists } from '../../';
 
 import './ArtistPage.css'
 const ArtistPage = () => {
@@ -11,7 +11,7 @@ const ArtistPage = () => {
     const [artistData, setArtistData] = useState([])
     const { artistId } = useParams();
     const [{ token }, dispatch] = useCurrentState();
-    // create a new artist use state data to store that info to use here...
+
     useEffect(() => {
         getArtist(token, artistId).then((data) => {
             setArtistMeta(data.data);
@@ -19,10 +19,7 @@ const ArtistPage = () => {
         getArtistTracks(token, artistId).then((data) => {
             setArtistData(data?.data?.tracks);
         })
-    }, [artistId])
-
-    artistMeta && console.log('Artist_Meta -> ', artistMeta);
-    artistData && console.log('artist_data -> ', artistData);
+    }, [artistId, token])
 
     const setFollowers = (followers) => {
         if (followers) {
@@ -44,8 +41,6 @@ const ArtistPage = () => {
                 <Box sx={{
                     width: "250px",
                     height: "250px",
-                    width: "20%",
-                    height: "100%",
                     margin: "0 2% 0 0",
                     background: `url(${artistMeta?.images[0]?.url}) no-repeat`,
                     backgroundSize: "cover",

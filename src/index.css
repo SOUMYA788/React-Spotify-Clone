@@ -35,6 +35,40 @@ body {
   margin: 5px auto;
 }
 
+
+/* FIREFOX */
+@-moz-keyframes text_scroll_animation {
+  from {
+      -moz-transform: translateX(100%);
+  }
+
+  to {
+      -moz-transform: translateX(-100%);
+
+  }
+}
+
+/* CHROME */
+@-webkit-keyframes text_scroll_animation {
+  from {
+      -webkit-transform: translateX(100%);
+  }
+
+  to {
+      -webkit-transform: translateX(-100%);
+  }
+}
+
+@keyframes text_scroll_animation {
+  from {
+      transform: translateX(100%);
+  }
+
+  to {
+      transform: translateX(-100%);
+  }
+}
+
 ::-webkit-scrollbar {
   width: 0px;
   height: 0px;

@@ -26,7 +26,10 @@ const PlayLists = ({ playListsData }) => {
                             xs: "80%",
                             sm: "49%"
                         },
-                        margin: "5px 0",
+                        margin: {
+                            xs: "5px auto",
+                            sm: "5px 0"
+                        },
                     }} key={`playlistCard_${indx}`}>
                         <PlayListCard playlist={playlist} />
                     </Box>

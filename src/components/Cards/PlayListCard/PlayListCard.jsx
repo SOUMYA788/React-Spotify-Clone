@@ -1,22 +1,12 @@
 import { Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import React from 'react'
+import { Link } from 'react-router-dom';
 import "./PlayListCard.css"
 const PlayListCard = ({ playlist }) => {
+    
     return (
-        <Box sx={{
-            width: "100%",
-            display: "flex",
-            flexDirection: "row",
-            alignItems: "center",
-            background:"rgba(255, 255, 255, 0.15)",
-            backdropFilter:"blur(5px)",
-            cursor:"pointer",
-            transition:"0.2s ease",
-            ":hover":{
-                background:"rgba(255, 255, 255, 0.3)",
-            }
-        }}>
+        <Link to={`/playlist/${playlist?.id}`} className='playlistLink'>
             <Box sx={{
                 width: "60px",
                 height: "60px",
@@ -35,7 +25,7 @@ const PlayListCard = ({ playlist }) => {
                     {playlist?.name}
                 </Typography>
             </Box>
-        </Box>
+        </Link>
     )
 }
 

@@ -13,7 +13,6 @@ const Album = () => {
 
   useEffect(() => {
     getAlbumInfo(token, albumId).then((data) => {
-      console.log("data is -> ", data);
       setAlbumData(data?.data?.tracks?.items)
       setAlbumMeta({
         albumUri: data?.data?.id,
@@ -25,7 +24,7 @@ const Album = () => {
         copyrights: data?.data?.copyrights,
       })
     });
-  }, [albumId])
+  }, [albumId, token])
 
   return (
     <Box>

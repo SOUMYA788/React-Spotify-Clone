@@ -6,7 +6,6 @@ import { Typography } from '@mui/material';
 
 const Home = () => {
   const [{ playlists, recentAlbums }, dispatch] = useCurrentState();
-
   const listHeadding = {
     backgroundColor: 'rgba(255, 255, 255, 0.5)',
     backdropFilter: "blur(5px)",
@@ -21,13 +20,17 @@ const Home = () => {
     <Box className="home_main_container" sx={{ width: "100%" }}>
       {
         playlists.length > 0 && <Box className="home_playlist_container" sx={{ width: "100%" }}>
-          <Typography component='h2' variant='h2' sx={listHeadding}>PLAYLISTS</Typography>
+          <Typography component='h2' variant='h2' sx={listHeadding}>
+            PLAYLISTS
+          </Typography>
           <PlayLists playListsData={playlists} />
         </Box>
       }
       {
         recentAlbums.length > 0 && <Box className='home_album_container' sx={{ margin: "20px 0 0" }}>
-          <Typography component='h2' variant='h2' sx={listHeadding}>ALBUMS</Typography>
+          <Typography component='h2' variant='h2' sx={listHeadding}>
+            ALBUMS
+          </Typography>
           <AlbumList albumListData={recentAlbums} />
         </Box>
       }

@@ -1,7 +1,7 @@
 import React from 'react'
-import { Box, Stack } from '@mui/material'
+import { Box } from '@mui/material'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { Album, ArtistPage, ControlPannel, Home, Login, Navigation, SearchBar } from '../';
+import { Album, ArtistPage, ControlPannel, Home, Navigation, PlaylistPage } from '../';
 
 const Activate = ({ currentSongData }) => {
     return (
@@ -30,7 +30,10 @@ const Activate = ({ currentSongData }) => {
                     height: 'calc(100% - 80px)',
                     flex: '1',
                     display: "flex",
-                    flexDirection: 'row'
+                    flexDirection: {
+                        xs:"column",
+                        sm:'row'
+                    }
                 }}>
                     <Navigation />
                     <Box sx={{ height: "100%", flex: "1" }}>
@@ -39,6 +42,7 @@ const Activate = ({ currentSongData }) => {
                                 <Route path='/' element={<Home />} />
                                 <Route path='/album/:albumId' element={<Album />} />
                                 <Route path='/artist/:artistId' element={<ArtistPage />} />
+                                <Route path='/playlist/:playlistId' element={<PlaylistPage />} />
                             </Routes>
                         </Box>
                     </Box>
@@ -51,10 +55,9 @@ const Activate = ({ currentSongData }) => {
                     background: "rgba(255, 255, 255, 0.2)",
                     backdropFilter: 'blur(5px)',
                     zIndex: '1'
-                }}>
+                }}> 
                     <ControlPannel currentMusic={currentSongData} />
                 </Box>
-
             </Box>
         </Router >
     )

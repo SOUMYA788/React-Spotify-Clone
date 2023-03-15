@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Box, Typography } from '@mui/material'
-import { FavoriteBorderRounded, PlayArrow, PlayCircle, PlayCircleFilledRounded, PauseCircleFilledRounded, ShuffleOutlined, SkipPreviousRounded, SkipNextRounded, RepeatRounded } from '@mui/icons-material/';
+import { FavoriteBorderRounded, PlayArrow,  PlayCircleFilledRounded, PauseCircleFilledRounded, ShuffleOutlined, SkipPreviousRounded, SkipNextRounded, RepeatRounded } from '@mui/icons-material/';
 import { useCurrentState } from '../../Service/Context';
 import { formatMs, playMusic, changeMusic } from '../../Service/Spotify/API';
 import "./ControlPannel.css"
@@ -8,25 +8,22 @@ import { Alert } from '../Alert/Alert';
 
 const ControlPannel = ({ currentMusic }) => {
 
+    const [playingMusicData, setPlayingMusicData] = useState(null)
     const [{ token, user }, dispatch] = useCurrentState()
 
     const setMusicState = (musicStatus) => {
-        console.log(token);
         playMusic(token, musicStatus).then((data) => {
-            console.log('playPause success -> ', data);
+            setPlayingMusicData(data);
         }).catch((err) => {
             console.log('playPause error -> ', err);
         })
     }
 
     const changeMusicTo = (changeState) => {
-        console.log(token);
         changeMusic(token, changeState).then((data) => {
-            console.log('change music success -> ', data);
+            setPlayingMusicData(data);
         }).catch((err) => {
-            let reason = err?.response?.data?.error?.reason
-            console.log('change music error -> ', reason);
-
+            console.log('change music error -> ', err?.response?.data?.error?.reason);
         })
     }
 
@@ -45,7 +42,7 @@ const ControlPannel = ({ currentMusic }) => {
         flexDirection: "row",
         alignItems: "center",
     }
-    
+
     const controlPannelMainBox = {
         width: "100%",
         height: "100%",
@@ -81,11 +78,13 @@ const ControlPannel = ({ currentMusic }) => {
                 <Box sx={{
                     height: "100%",
                     flex: "1",
-                    width: "15%", overflow: "hidden",
+                    width: "15%", 
+                    overflow: "hidden",
                     display: "flex",
                     flexDirection: "column",
                     alignItems: "center",
-                    justifyContent: "center", gap: "10%"
+                    justifyContent: "center", 
+                    gap: "10%"
                 }}>
                     <Typography
                         component='h2'
@@ -206,7 +205,7 @@ const ControlPannel = ({ currentMusic }) => {
                     justifyContent: "space-between"
                 }}>
                     <Typography component='p' variant='p' sx={{ fontSize: "1em" }}>0</Typography>
-                    <input className='musicProgressBar' type='range' min={0} max={currentMusic && currentMusic?.duration_ms} value={0} />
+                    <input className='musicProgressBar' type='range' min={0} max={currentMusic && currentMusic?.duration_ms} value={0} onChange={() => { }} />
                     <Typography component='p' variant='p' sx={{ fontSize: "1em" }}>
                         {
                             formatMs(currentMusic?.item?.duration_ms) || "0"

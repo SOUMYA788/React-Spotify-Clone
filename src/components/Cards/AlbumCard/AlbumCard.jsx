@@ -27,7 +27,7 @@ const AlbumCard = ({ albumCardData }) => {
 
   const albumCardMainBoxStyle = {
     width: {
-      xs: usedInList ? "75%" : "100%",
+      xs: usedInList ? "100%" : "100%",
       sm: usedInList ? "20%" : "100%"
     },
     display: "flex",

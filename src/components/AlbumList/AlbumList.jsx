@@ -9,7 +9,8 @@ const AlbumList = ({ albumListData }) => {
         let uniqueAlbumsData = albumListData.filter((element, indx) => {
             let name = element?.track?.album?.name;
             if (!names.includes(name)) {
-                names.push(name)
+                // if name not available then return element, and save the returned name in list, so next time it will include in count...
+                names.push(name) 
                 return element
             }
         });
@@ -17,21 +18,15 @@ const AlbumList = ({ albumListData }) => {
         setUniqueAlbums(uniqueAlbumsData)
     }, [albumListData])
 
-    uniqueAlbums.length && console.log(uniqueAlbums);
-
     return (
         <Box sx={{
             display: "flex",
             gap: "2%",
-            padding: "5px 2%",
-            flexDirection: {
-                xs: "column",
-                sm: "row"
-            },
-            flexWrap: {
-                xs: "nowrap",
-                sm: "wrap"
-            },
+            padding:{
+                xs:"5%",
+                sm: "5px 2%"},
+            flexDirection: "row",
+            flexWrap: "wrap",
         }}>
             {
                 uniqueAlbums.length && uniqueAlbums.map((cardDataElement, indx) => {

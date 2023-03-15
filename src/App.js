@@ -1,10 +1,10 @@
 import './App.css';
-import { Activate, Album, ControlPannel, Home, Login, Navigation, SearchBar } from './components';
+import { Activate, Login } from './components';
 import { Box } from '@mui/material';
 import { useCurrentState } from './Service/Context';
 import { useEffect } from 'react';
 import { getToken } from './Service/Spotify/Authentication';
-import { getAllPlaylists, getCurrentSong, getMe, getPlaybackState, getRecentPlayedAlbums } from './Service/Spotify/API';
+import { getAllPlaylists, getCurrentSong, getMe,getRecentPlayedAlbums } from './Service/Spotify/API';
 
 function App() {
 
@@ -48,7 +48,6 @@ function App() {
       })
 
       getCurrentSong(token).then((data) => {
-        console.log('get the current playing data...', data);
         if (data?.currently_playing_type === 'track') {
           dispatch({
             type: 'SET_CURRENT_PLAYING',
@@ -56,17 +55,12 @@ function App() {
           })
         }
       }).catch((err) => {
-        console.log('error occoured in control pannel line 12');
         console.log(err);
       });
 
-      getPlaybackState(token).then((data) => {
-        console.log('playback_state -> ', data)
-      })
-
     }
 
-  }, [token])
+  }, [token, dispatch])
 
 
   return (

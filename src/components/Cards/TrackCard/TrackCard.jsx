@@ -7,9 +7,8 @@ import { AppContext } from '../../../Service/Context';
 import "./TrackCard.css"
 
 const TrackCard = ({ callFrom, tracksDetails, albumImg }) => {
-    const { setTrackId } = useContext(AppContext)
-    if (!tracksDetails) return "Loading";
-    console.log(tracksDetails);
+    const [{ setTrackId }, dispatch] = useContext(AppContext);
+    if (!tracksDetails) return "Loading...";
     const formatMs = (ms) => {
         if (ms) {
             let sec = Math.floor(ms / 1000);
@@ -22,7 +21,6 @@ const TrackCard = ({ callFrom, tracksDetails, albumImg }) => {
             restSec = restSec < 10 ? `0${restSec}` : restSec
 
             let duration = hour > 0 ? `${hour}:${restMin}:${restSec}` : `${restMin}:${restSec}`;
-            console.log(duration)
             return duration;
         }
     }
@@ -30,6 +28,7 @@ const TrackCard = ({ callFrom, tracksDetails, albumImg }) => {
         <Box
             sx={{
                 width: "85%",
+                margin: "0 auto",
                 padding: "10px 0",
                 display: "flex",
                 flexDirection: "row",
@@ -60,7 +59,7 @@ const TrackCard = ({ callFrom, tracksDetails, albumImg }) => {
                 </Typography>
             </Box>
 
-            <Box sx={{ width: "40px", padding: "2px", margin:'0 2% 0 0' }}>
+            <Box sx={{ width: "40px", padding: "2px", margin: '0 2% 0 0' }}>
                 <Box component='img' src={tracksDetails?.album?.images[0]?.url || albumImg} sx={{
                     width: "100%",
                     height: "100%",
@@ -68,21 +67,19 @@ const TrackCard = ({ callFrom, tracksDetails, albumImg }) => {
                 }} />
             </Box>
 
-            <Box sx={{ flex: "1" }}>
+            <Box sx={{ flex: "1", overflow:"hidden" }}>
                 <Typography component="p" variant='p' sx={{ margin: "0 0 5px" }}>
                     {tracksDetails?.name}
                 </Typography>
-                {callFrom !== 'artist' && <Typography component="p" variant='p'
-                    sx={{ fontSize: "1em", display: "flex", flexDirection: "row" }}>
+                {callFrom !== 'artist' && <Typography className='trackCard_artistName' component="p" variant='p' 
+                    sx={{ width:"100%", padding:"2px 5px", fontSize: "1em", display: "flex", flexDirection: "row",  whiteSpace:"nowrap", transform:'translateX(100%)', animation:'text_scroll_animation 15s linear infinite'}}>
                     {
                         tracksDetails?.artists.map(({ id, name }, indx) => {
                             return (
-                                <>
-                                    <Link className="trackList_artistLinks" to={`/artist/${id}`} key={`${name}_${indx}`}>
-                                        {name}
-                                    </Link>
-                                    {indx < (tracksDetails?.artists.length - 1) && <span key={`span_${name}_${indx}`}>,&nbsp;</span>}
-                                </>
+                                <Link className="trackList_artistLinks" to={`/artist/${id}`} key={`${name}_${indx}`}>
+                                    {name}
+                                    {indx < (tracksDetails?.artists.length - 1) && <span>,&nbsp;</span>}
+                                </Link>
                             )
                         })
                     }
