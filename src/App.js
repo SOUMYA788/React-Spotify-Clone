@@ -4,7 +4,7 @@ import { Box } from '@mui/material';
 import { useCurrentState } from './Service/Context';
 import { useEffect } from 'react';
 import { getToken } from './Service/Spotify/Authentication';
-import { getAllPlaylists, getCurrentSong, getMe,getRecentPlayedAlbums } from './Service/Spotify/API';
+import { getAllPlaylists, getCurrentSong, getMe, getRecentPlayedAlbums } from './Service/Spotify/API';
 
 function App() {
 
@@ -64,7 +64,12 @@ function App() {
 
 
   return (
-    <Box sx={{ width: "100vw", height: "100vh" }} className='App'>
+    <Box sx={{
+      width: "100%",
+      height: "100%",
+      minHeight:"fill-available",
+      overflow:"hidden"
+    }} className='App'>
       {
         token ? <Activate currentSongData={currentlyPlaying} /> : <Login />
       }

@@ -1,10 +1,12 @@
 import { Typography } from '@mui/material'
 import { Box } from '@mui/system'
 import React from 'react'
-import { useCurrentState } from '../Service/Context';
-import { NavLists } from './NavLists/NavLists';
-import { SearchBar } from './';
+import { useCurrentState } from '../../Service/Context';
+import { NavLists } from '../NavLists/NavLists';
+import { SearchBar } from '..';
 import { Link } from 'react-router-dom';
+
+import './Navigation.css'
 
 const Navigation = () => {
 	const [{ playlists }, dispatch] = useCurrentState();
@@ -16,7 +18,7 @@ const Navigation = () => {
 				sm: "200px"
 			},
 			height: {
-				xs: "100px",
+				xs: "50px",
 				sm: "100%"
 			},
 			background: "rgba(0,0,0,0.7)",
@@ -31,24 +33,11 @@ const Navigation = () => {
 				xs: "center",
 				sm: "flex-start"
 			},
-			justifyContent: 'flex-start'
+			justifyContent: 'flex-start',
+			gap:"10px"
 		}}>
 
-			<Link component="div" to={'/'} style={{
-				width: {
-					xs: "35px",
-					sm: "100%"
-				},
-				display: "flex",
-				flexDirection: "row",
-				alignItems: "center",
-				justifyContent: "center",
-				textDecoration: "none",
-				marginRight:{
-					xs:"5px",
-					sm:"0"
-				}
-			}}>
+			<Link to={'/'} id='navigation_homeLink'>
 				<img src="/icon.svg" style={{ width: "30px", height: "30px", marginRight: { xs: "0", sm: "15px" } }} alt="logo" />
 
 				<Typography variant='h2' component="h2" sx={{
@@ -72,7 +61,7 @@ const Navigation = () => {
 				},
 				margin: {
 					xs: "0 auto",
-					sm: "15px auto 0"
+					sm: "10px auto 0"
 				},
 				height: "35px"
 			}}>
@@ -80,16 +69,15 @@ const Navigation = () => {
 			</Box>
 
 			<Box sx={{
-				marginTop: "20px",
+				width:"100%",
+				marginTop: "10px",
 				display: {
 					xs: 'none',
 					sm: "block"
 				}
 			}}>
 				{
-					(playlists.length > 0) && <Box sx={{
-						marginTop: '30px',
-					}}>
+					(playlists.length > 0) && <Box>
 						<Typography component='h2' variant='h2' sx={{ color: "white", fontSize: "1em", width: "80%", margin: "0 auto" }}>
 							PLAYLISTS
 						</Typography>

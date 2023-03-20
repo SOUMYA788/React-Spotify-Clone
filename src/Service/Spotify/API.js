@@ -142,3 +142,27 @@ export async function getPlaylistData(token, playlistId) {
   let data = await axios.get(url, options);
   return data;
 }
+
+export async function search(token, searchId) {
+  let url = `https://api.spotify.com/v1/search?q=${searchId}&type=album,track&include_external=audio`;
+  let options = getOptions(token);
+  let {data} = await axios.get(url, options);
+  return data;
+}
+export async function setRepeatMode(token, repeatMode) {
+  let url = `https://api.spotify.com/v1/me/player/repeat?state=${repeatMode}`;
+  let options = getOptions(token);
+  await axios.put(url, {}, options)
+}
+
+export async function setShuffleMode(token, shuffleState) {
+  let url = `https://api.spotify.com/v1/me/player/shuffle?state=${shuffleState}`;
+  let options = getOptions(token);
+  await axios.put(url, {}, options)
+}
+
+export async function setVolume(token, volume_persentage) {
+  let url = `https://api.spotify.com/v1/me/player/volume?volume_percent=${volume_persentage}`;
+  let options = getOptions(token);
+  await axios.put(url, {}, options)
+}

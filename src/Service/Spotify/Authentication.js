@@ -1,6 +1,6 @@
 const auth_endpoint = 'https://accounts.spotify.com/authorize';
 const redirect_url = 'https://spotify-clone-7b9c1.web.app/';
-const localRedirect = 'http://localhost:3000/'
+const localRedirect = 'http://192.168.43.222:3000/';
 const client_id = process.env.REACT_APP_CLIENT_ID;
 const auth_scope = [
     'streaming',
@@ -22,3 +22,4 @@ export const getToken = () => {
 }
 
 export const authUrl = `${auth_endpoint}?client_id=${client_id}&redirect_uri=${redirect_url}&scope=${auth_scope.join(" ")}&response_type=token&show_dialog=true`
+

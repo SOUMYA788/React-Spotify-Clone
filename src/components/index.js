@@ -1,7 +1,8 @@
 export { Login } from './Pages/Login/Login'
 export { Home } from "./Pages/Home"
-export { Navigation } from "./Navigation"
+export { Navigation } from "./Navigation/Navigation"
 export { SongCard } from "./SongCard"
+export { Search } from "./Pages/Search/Search"
 export { PlayLists } from "./PlayLists/PlayLists"
 export { PlayListCard } from './Cards/PlayListCard/PlayListCard'
 export { AlbumList } from "./AlbumList/AlbumList"

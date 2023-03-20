@@ -28,9 +28,6 @@ const Home = () => {
       }
       {
         recentAlbums.length > 0 && <Box className='home_album_container' sx={{ margin: "20px 0 0" }}>
-          <Typography component='h2' variant='h2' sx={listHeadding}>
-            ALBUMS
-          </Typography>
           <AlbumList albumListData={recentAlbums} />
         </Box>
       }
