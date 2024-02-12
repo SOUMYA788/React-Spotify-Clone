@@ -1,13 +1,16 @@
 import './App.css';
 import { Activate, Login } from './components';
-import { Box } from '@mui/material';
+// import { Box } from '@mui/material';
 import { useCurrentState } from './Service/Context';
 import { useEffect } from 'react';
 import { getToken } from './Service/Spotify/Authentication';
 import { getAllPlaylists, getCurrentSong, getMe, getRecentPlayedAlbums } from './Service/Spotify/API';
+import { useCustomTheme } from './components/Layout/ThemeSwitcher';
 
-function App() {
 
+
+const App = () => {
+  const [theme, setTheme] = useCustomTheme();
   const [{ token, currentlyPlaying }, dispatch] = useCurrentState();
 
   useEffect(() => {
@@ -64,16 +67,13 @@ function App() {
 
 
   return (
-    <Box sx={{
-      width: "100%",
-      height: "100%",
-      minHeight:"fill-available",
-      overflow:"hidden"
-    }} className='App'>
-      {
-        token ? <Activate currentSongData={currentlyPlaying} /> : <Login />
-      }
-    </Box>
+    <div className={`w-full min-h-dvh ${theme}`}>
+      <div className='App w-full h-full'>
+        {
+          token ? <Activate currentSongData={currentlyPlaying} /> : <Login />
+        }
+      </div>
+    </div>
   );
 }
 
