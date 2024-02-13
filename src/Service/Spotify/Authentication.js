@@ -1,7 +1,10 @@
+import { ENV_CONFIG } from "../../envConfig";
+
+ENV_CONFIG
 const auth_endpoint = 'https://accounts.spotify.com/authorize';
 const redirect_url = 'https://spotify-clone-7b9c1.web.app/';
-const localRedirect = 'http://192.168.43.222:3000/';
-const client_id = process.env.REACT_APP_CLIENT_ID;
+const localRedirect = 'http://localhost:5173/';
+const client_id = ENV_CONFIG.APP_CLIENT_ID;
 const auth_scope = [
     'streaming',
     'user-modify-playback-state',

@@ -6,7 +6,6 @@ export const useCustomTheme = () => {
     const [theme, setTheme] = useState("light");
 
     useEffect(() => {
-        setMount(true)
         setTheme(localStorage.getItem("spotify_clone_theme") || "light")
     }, [])
 

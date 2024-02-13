@@ -1,38 +1,27 @@
 import React from 'react'
-import Box from '@mui/material/Box';
-import { AlbumList, PlayLists } from ".."
+import { AlbumList, PlayLists } from '../Layout';
 import { useCurrentState } from '../../Service/Context';
-import { Typography } from '@mui/material';
 
 const Home = () => {
   const [{ playlists, recentAlbums }, dispatch] = useCurrentState();
-  const listHeadding = {
-    backgroundColor: 'rgba(255, 255, 255, 0.5)',
-    backdropFilter: "blur(5px)",
-    margin: '5px 2%',
-    height: `35px`,
-    lineHeight: "35px",
-    fontSize: "1.5em",
-    padding: "0 1%",
-  }
 
   return (
-    <Box className="home_main_container" sx={{ width: "100%" }}>
+    <div className="w-full">
       {
-        playlists.length > 0 && <Box className="home_playlist_container" sx={{ width: "100%" }}>
-          <Typography component='h2' variant='h2' sx={listHeadding}>
+        playlists.length > 0 && <div className="home_playlist_container w-full" >
+          <h2 className='h-9 text-2xl px-[1%] bg-slate-200 bg-opacity-50 backdrop-blur-sm my-1 mx-[2%]' >
             PLAYLISTS
-          </Typography>
+          </h2>
           <PlayLists playListsData={playlists} />
-        </Box>
+        </div>
       }
       {
-        recentAlbums.length > 0 && <Box className='home_album_container' sx={{ margin: "20px 0 0" }}>
+        recentAlbums.length > 0 && <div className='mt-5'>
           <AlbumList albumListData={recentAlbums} />
-        </Box>
+        </div>
       }
-    </Box>
+    </div>
   )
 }
 
-export { Home }
+export default Home

@@ -1,11 +1,12 @@
-import './App.css';
-import { Activate, Login } from './components';
-// import { Box } from '@mui/material';
+import { Login } from './components/Pages';
+import Activate from './components/Activate';
+
 import { useCurrentState } from './Service/Context';
 import { useEffect } from 'react';
 import { getToken } from './Service/Spotify/Authentication';
 import { getAllPlaylists, getCurrentSong, getMe, getRecentPlayedAlbums } from './Service/Spotify/API';
 import { useCustomTheme } from './components/Layout/ThemeSwitcher';
+import { ToastContainer } from 'react-toastify';
 
 
 
@@ -67,7 +68,21 @@ const App = () => {
 
 
   return (
-    <div className={`w-full min-h-dvh ${theme}`}>
+    <div className={`w-full h-dvh overflow-y-scroll scroll-smooth ${theme}`}>
+      
+      <ToastContainer
+        position="bottom-center"
+        autoClose={500}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme={theme}
+        transition="Slide" />
+
       <div className='App w-full h-full'>
         {
           token ? <Activate currentSongData={currentlyPlaying} /> : <Login />
