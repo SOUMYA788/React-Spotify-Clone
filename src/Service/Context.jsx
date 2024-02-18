@@ -12,4 +12,20 @@ const AppProvider = ({ reducerData, reducer, children }) => {
 
 const useCurrentState = () => useContext(AppContext)
 
-export {AppContext, AppProvider, useCurrentState}
+/**
+ * use to update the global state.
+ * @param {Function} dispatch function helps to update the state.
+ * @param {string} type type of dispatch
+ * @param {object} payload object with key and value. i.e. {data: "data"}
+ * @returns the complete dispatch function.
+ */
+const dispatchData = (dispatch, type, payload) => {
+    return(
+        dispatch({
+            type,
+            ...payload
+        })
+    )
+}
+
+export {AppContext, AppProvider, useCurrentState, dispatchData}

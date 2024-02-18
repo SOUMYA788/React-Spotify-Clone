@@ -26,31 +26,42 @@ const getOptions = (token) => {
   })
 }
 
-export async function getMe(token) {
-  let url = `https://api.spotify.com/v1/me`;
-  let options = getOptions(token);
-  let { data } = await axios.get(url, options)
-  return data
-}
+const baseUrl = "https://api.spotify.com/v1";
 
-export async function getAllPlaylists(token) {
-  let url = "https://api.spotify.com/v1/me/playlists";
-  let options = getOptions(token);
-  let data = await axios.get(url, options);
-  return data;
-}
-
-export async function getRecentPlayedAlbums(token) {
-  let url = "https://api.spotify.com/v1/me/player/recently-played";
-  let options = {
-    headers: {
-      'Authorization': `Bearer ${token}`,
-      'Content-Type': 'application/json'
+/**
+ * return current user's profile.
+ */
+export async function getCurrentUserProfile(token) {
+  const url = `${baseUrl}/me`
+  try {
+    const options = getOptions(token);
+    let { data } = await axios.get(url, options)
+    return data
+  } catch (error) {
+    return {
+      success: false,
+      data: null,
+      url,
     }
-  };
-  let { data: { items } } = await axios.get(url, options);
-  return items;
+  }
 }
+
+
+/**
+ * use to get current user's playlist
+ * @param {*} token access token
+ * @returns current user's playlist
+ */
+export const getAllPlaylists = async (token) => {
+  try {
+    const url = `${baseUrl}/me/playlists`;
+    const options = getOptions(token);
+    const data = await axios.get(url, options);
+    return data;
+  } catch (error) { console.log(error.message || "Faild to fetch playlists") }
+}
+
+
 
 export async function getSavedShows(token) {
   let url = "https://api.spotify.com/v1/me/shows";
@@ -66,61 +77,18 @@ export async function getSavedShows(token) {
 
 
 export async function getAlbumInfo(token, id) {
-  let url = `https://api.spotify.com/v1/albums/${id}`;
-  let options = {
-    headers: {
-      'Authorization': `Bearer ${token}`,
-      'Content-Type': 'application/json'
-    }
-  };
-  let { data } = await axios.get(url, options);
-  return { data };
-}
-
-export async function getCurrentSong(token) {
-  let url = 'https://api.spotify.com/v1/me/player/currently-playing?market=ES';
-  let options = {
-    headers: {
-      'Authorization': `Bearer ${token}`,
-      'Content-Type': 'application/json',
-      'Accept': 'application/json'
-    }
-  };
-  let { data } = await axios.get(url, options);
-  return data;
-}
-
-export async function getPlaybackState(token) {
-  let url = 'https://api.spotify.com/v1/me/player';
-  let options = {
-    headers: {
-      'Authorization': `Bearer ${token}`,
-      'Content-Type': 'application/json'
-    }
-  };
-  let data = await axios.get(url, options);
-  return data;
+  try {
+    const url = `https://api.spotify.com/v1/albums/${id}`;
+    const options = getOptions(token)
+    const data = await axios.get(url, options);
+    console.log("albumData -> ", data)
+    return data;
+  } catch (error) {
+    console.log(error.message || "Faild to fetch album information");
+  }
 }
 
 
-export async function playMusic(token, musicStatus) {
-  let url = `https://api.spotify.com/v1/me/player/${musicStatus}`;
-  let options = getOptions(token);
-  let data = await axios.put(url, {}, options)
-  return data;
-}
-
-export async function changeMusic(token, changeState) {
-  let url = `https://api.spotify.com/v1/me/player/${changeState}`;
-  let options = {
-    headers: {
-      'Authorization': `Bearer ${token}`,
-      'Content-Type': 'application/json'
-    }
-  };
-  let data = await axios.post(url, {}, options)
-  return data
-}
 
 export async function getArtist(token, artistId) {
   let url = `https://api.spotify.com/v1/artists/${artistId}`;
@@ -146,23 +114,7 @@ export async function getPlaylistData(token, playlistId) {
 export async function search(token, searchId) {
   let url = `https://api.spotify.com/v1/search?q=${searchId}&type=album,track&include_external=audio`;
   let options = getOptions(token);
-  let {data} = await axios.get(url, options);
+  let { data } = await axios.get(url, options);
   return data;
 }
-export async function setRepeatMode(token, repeatMode) {
-  let url = `https://api.spotify.com/v1/me/player/repeat?state=${repeatMode}`;
-  let options = getOptions(token);
-  await axios.put(url, {}, options)
-}
 
-export async function setShuffleMode(token, shuffleState) {
-  let url = `https://api.spotify.com/v1/me/player/shuffle?state=${shuffleState}`;
-  let options = getOptions(token);
-  await axios.put(url, {}, options)
-}
-
-export async function setVolume(token, volume_persentage) {
-  let url = `https://api.spotify.com/v1/me/player/volume?volume_percent=${volume_persentage}`;
-  let options = getOptions(token);
-  await axios.put(url, {}, options)
-}

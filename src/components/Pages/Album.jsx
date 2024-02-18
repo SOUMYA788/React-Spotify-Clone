@@ -6,25 +6,34 @@ import { AlbumCard, TrackLists } from '../Layout';
 
 
 const Album = () => {
-  const [{ token }, dispatch] = useCurrentState()
+  const [{ auth }, dispatch] = useCurrentState()
   const [albumData, setAlbumData] = useState([])
   const [albumMeta, setAlbumMeta] = useState(null)
   const { albumId } = useParams();
 
+  const { token } = auth;
+
+
+
   useEffect(() => {
-    getAlbumInfo(token, albumId).then((data) => {
-      setAlbumData(data?.data?.tracks?.items)
-      setAlbumMeta({
-        albumUri: data?.data?.id,
-        albumName: data?.data?.name,
-        albumArtist: data?.data?.artists,
-        albumCoverArt: data?.data?.images[0].url,
-        albumLabel: data?.data?.label,
-        albumDate: data?.data?.release_date,
-        copyrights: data?.data?.copyrights,
-      })
-    });
+    if (token) {
+      getAlbumInfo(token, albumId).then((data) => {
+        setAlbumData(data?.data?.tracks?.items)
+        setAlbumMeta({
+          albumUri: data?.data?.id,
+          albumName: data?.data?.name,
+          albumArtist: data?.data?.artists,
+          albumCoverArt: data?.data?.images[0].url,
+          albumLabel: data?.data?.label,
+          albumDate: data?.data?.release_date,
+          copyrights: data?.data?.copyrights,
+        })
+      });
+    }
   }, [albumId, token])
+
+
+
 
   return (
     <>

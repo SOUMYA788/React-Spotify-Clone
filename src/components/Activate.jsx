@@ -11,7 +11,7 @@ import { Album, ArtistPage, Home, PlaylistPage, Search } from './Pages';
 
 
 
-const Activate = ({ currentSongData }) => {
+const Activate = () => {
     return (
         <Router>
             <div className='w-full h-full overflow-hidden relative flex flex-col'>
@@ -36,7 +36,7 @@ const Activate = ({ currentSongData }) => {
                 </div>
 
                 <div className='w-full h-20 max-h-20 p-1 bg-white bg-opacity-50 z-[1]'>
-                    <ControlPannel currentMusic={currentSongData} />
+                    <ControlPannel />
                 </div>
             </div>
         </Router >

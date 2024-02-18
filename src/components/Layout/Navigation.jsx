@@ -7,14 +7,14 @@ import { Link } from 'react-router-dom';
 
 
 const Navigation = () => {
-	const [{ playlists }, dispatch] = useCurrentState();
+	const [{ playlists }, _] = useCurrentState();
 
 	return (
-		<div className='w-full 600px:w-48 h-12 600px:h-full bg-slate-700 backdrop-blur-sm py-2 px-1 flex 600px:flex-col items-center 600px:items-start justify-start gap-2' >
+		<div className='w-full 600px:w-48 600px:h-full bg-slate-700 backdrop-blur-sm py-2 px-1 flex 600px:flex-col items-center 600px:items-start justify-between 600px:justify-start gap-2' >
 
-			<Link to={'/'} className='w-9 flex items-center justify-center no-underline gap-[6%] mr-1 600px:w-full 600px:mr-0'>
+			<Link to={'/'} className='flex items-center justify-center no-underline gap-[6%] mr-1 p-0.5 rounded-full 600px:w-full 600px:mr-0 outline-none ring-2 ring-transparent focus:ring-slate-300 hover:ring-slate-300'>
 
-				<img src="/icon.svg" className='w-7 h-7 600px:mr-3' alt="logo" />
+				<img src="/icon.svg" className='w-8 h-8 600px:mr-3' alt="logo" />
 
 				<h2 className='text-white text-2xl text-center hidden 600px:inline-block' >
 					Spotify
@@ -23,13 +23,11 @@ const Navigation = () => {
 			</Link>
 
 
-			<div className='h-9 w-[calc(100% - 40px)] 600px:w-full mx-auto 600px:mt-2' >
-				<SearchBar />
-			</div>
+			<SearchBar />
 
 			<div className='w-full mt-2 hidden 600px:block'>
 				{
-					(playlists.length > 0) && <>
+					(playlists?.length > 0) && <>
 						<h2 className='text-white text-base w-4/5 mx-auto' >
 							PLAYLISTS
 						</h2>
@@ -42,6 +40,8 @@ const Navigation = () => {
 					</>
 				}
 			</div>
+
+			
 
 		</div>
 	)

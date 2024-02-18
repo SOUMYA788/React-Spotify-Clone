@@ -15,7 +15,7 @@ body{
 
 
 /* FIREFOX */
-@-moz-keyframes text_scroll_animation {
+@-moz-keyframes scroll {
   from {
       -moz-transform: translateX(100%);
   }
@@ -26,7 +26,7 @@ body{
 }
 
 /* CHROME */
-@-webkit-keyframes text_scroll_animation {
+@-webkit-keyframes scroll {
   from {
       -webkit-transform: translateX(100%);
   }
@@ -35,7 +35,7 @@ body{
   }
 }
 
-@keyframes text_scroll_animation {
+@keyframes scroll {
   from {
       transform: translateX(100%);
   }

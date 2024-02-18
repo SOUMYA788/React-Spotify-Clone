@@ -22,6 +22,7 @@ const TrackCard = ({ callFrom, tracksDetails, albumImg }) => {
             return duration;
         }
     }
+    console.log(tracksDetails)
     return (
         <div className='w-4/5 mx-auto py-2 px-[3%] flex items-center rounded-md justify-evenly transition-all bg-slate-200 backdrop-blur-sm cursor-pointer hover:bg-slate-400' onClick={() => { setTrackId(tracksDetails?.id) }}>
 
@@ -29,11 +30,11 @@ const TrackCard = ({ callFrom, tracksDetails, albumImg }) => {
                 <img src={tracksDetails?.album?.images[0]?.url || albumImg} className='w-full h-full object-contain' />
             </div>
 
-            <div className='flex-1 overflow-hidden'>
-                <p className='mb-1'> {tracksDetails?.name} </p>
+            <div className='w-full flex flex-col justify-center overflow-hidden'>
+                <p className={`w-full text-xs whitespace-nowrap ${tracksDetails?.name.length > 16 && "animate-[scroll_15s_linear_infinite]"}`}> {tracksDetails?.name} </p>
 
                 {
-                    callFrom !== 'artist' && <p className='w-full py-0.5 px-1 text-base flex whitespace-nowrap translate-x-full animate-[text_scroll_animation 15s linear infinite]'>
+                    callFrom !== 'artist' && <p className={`w-full h-full px-1 text-sm flex whitespace-nowrap bg-red-500 translate-x-full animate-[scroll_15s_linear_infinite] mt-1`}>
                         {
                             tracksDetails?.artists.map(({ id, name }, indx) => {
                                 return (
@@ -49,8 +50,8 @@ const TrackCard = ({ callFrom, tracksDetails, albumImg }) => {
 
             </div>
 
-            <div className='w-20 flex flex-col items-center justify-center' >
-                <p className='text-base'> {formatMs(tracksDetails?.duration_ms)} </p>
+            <div className='flex flex-col items-center justify-center' >
+                <p className='text-xs'> {formatMs(tracksDetails?.duration_ms)} </p>
             </div>
         </div>
     )

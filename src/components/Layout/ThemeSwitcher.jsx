@@ -3,11 +3,7 @@ import { BiMoon, BiSun } from 'react-icons/bi'
 import {CustomButton} from './';
 
 export const useCustomTheme = () => {
-    const [theme, setTheme] = useState("light");
-
-    useEffect(() => {
-        setTheme(localStorage.getItem("spotify_clone_theme") || "light")
-    }, [])
+    const [theme, setTheme] = useState(localStorage.getItem("spotify_clone_theme") || "light");
 
     return [theme, setTheme]
 }

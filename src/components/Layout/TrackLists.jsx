@@ -9,7 +9,7 @@ const TrackLists = ({ callFrom, tracksArr, albumImg }) => {
         <div className='w-full flex flex-col items-center gap-1' >
             {
                 tracksArr.map((tracksDetails, indx) => {
-                    return (<TrackCard callFrom = {callFrom} tracksDetails={tracksDetails} albumImg={albumImg} key={`track_${indx}`} />)
+                    return (<TrackCard callFrom={callFrom} tracksDetails={tracksDetails} albumImg={albumImg} key={`track_${indx}`} />)
                 })
             }
         </div >
