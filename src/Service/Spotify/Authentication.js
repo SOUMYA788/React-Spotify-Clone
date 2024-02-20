@@ -29,5 +29,5 @@ export const getToken = () => {
     return token;
 }
 
-export const authUrl = `${auth_endpoint}?client_id=${client_id}&redirect_uri=${localRedirect}&scope=${auth_scope.join("%20")}&response_type=token&show_dialog=true`
+export const authUrl = `${auth_endpoint}?client_id=${client_id}&redirect_uri=${redirect_url}&scope=${auth_scope.join("%20")}&response_type=token&show_dialog=true`
 
