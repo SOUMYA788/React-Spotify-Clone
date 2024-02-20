@@ -13,6 +13,10 @@ body{
   overflow: hidden;
 }
 
+.animate-scroll{
+  @apply animate-[scroll_15s_linear_infinite]
+}
+
 
 /* FIREFOX */
 @-moz-keyframes scroll {

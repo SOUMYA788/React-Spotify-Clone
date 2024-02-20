@@ -86,6 +86,27 @@ export async function playMusic(token, musicStatus, reqBody) {
 }
 
 
+/**
+ * Spotify Premium Required
+ * play provided tracks in array
+ * @param {string} token app access token.
+ * @param {Array} tracks array of track id as string.
+ */
+export const playTrack = async (token, tracks) => {
+    try {
+        const url = `${baseUrl}/me/player/play`
+        const options = getOptions(token);
+        const responce = await axios.put(url, {
+            uris: tracks
+        }, {options})
+        return responce.data;
+    } catch (error) {
+        console.log(error.message)  
+    }
+}
+
+
+
 
 /**
  * Spotify Premium Required

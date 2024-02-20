@@ -64,13 +64,10 @@ export const getAllPlaylists = async (token) => {
 
 
 export async function getSavedShows(token) {
-  let url = "https://api.spotify.com/v1/me/shows";
-  let options = {
-    headers: {
-      'Authorization': `Bearer ${token}`,
-      'Content-Type': 'application/json'
-    }
-  };
+  let url = `${baseUrl}/me/shows`;
+  
+  let options = getOptions(token);
+
   let responce = await axios.get(url, options);
   return responce;
 }
@@ -78,10 +75,9 @@ export async function getSavedShows(token) {
 
 export async function getAlbumInfo(token, id) {
   try {
-    const url = `https://api.spotify.com/v1/albums/${id}`;
+    const url = `${baseUrl}/albums/${id}`;
     const options = getOptions(token)
     const data = await axios.get(url, options);
-    console.log("albumData -> ", data)
     return data;
   } catch (error) {
     console.log(error.message || "Faild to fetch album information");
@@ -91,28 +87,32 @@ export async function getAlbumInfo(token, id) {
 
 
 export async function getArtist(token, artistId) {
-  let url = `https://api.spotify.com/v1/artists/${artistId}`;
+  let url = `${baseUrl}/artists/${artistId}`;
   let options = getOptions(token);
   let data = await axios.get(url, options);
   return data;
 }
 
 export async function getArtistTracks(token, artistId) {
-  let url = `https://api.spotify.com/v1/artists/${artistId}/top-tracks?market=ES`;
+  let url = `${baseUrl}/artists/${artistId}/top-tracks?market=ES`;
   let options = getOptions(token);
   let data = await axios.get(url, options);
   return data;
 }
 
 export async function getPlaylistData(token, playlistId) {
-  let url = `https://api.spotify.com/v1/playlists/${playlistId}`;
-  let options = getOptions(token);
-  let data = await axios.get(url, options);
-  return data;
+  try {
+    let url = `${baseUrl}/playlists/${playlistId}`;
+    let options = getOptions(token);
+    let data = await axios.get(url, options);
+    return data;
+  } catch (error) {
+    console.log(error.message)
+  }
 }
 
 export async function search(token, searchId) {
-  let url = `https://api.spotify.com/v1/search?q=${searchId}&type=album,track&include_external=audio`;
+  let url = `${baseUrl}/search?q=${searchId}&type=album,track&include_external=audio`;
   let options = getOptions(token);
   let { data } = await axios.get(url, options);
   return data;

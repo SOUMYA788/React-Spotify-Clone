@@ -9,8 +9,12 @@ import { AlbumList, TrackLists } from '../Layout';
 const Search = () => {
     const [searchTrack, setSearchTrack] = useState([])
     const [searchAlbums, setSearchAlbums] = useState([])
-    const [{ token }, dispatch] = useCurrentState();
+
+    const [{ auth }, _] = useCurrentState();
+    
     const { searchId } = useParams();
+
+    const {token} = auth;
 
     useEffect(() => {
         search(token, searchId).then((data) => {
@@ -25,13 +29,13 @@ const Search = () => {
     return (
         <div className='w-full h-full p-2'>
             {
-                (searchAlbums.length > 0) && <div className='search_album_container '>
+                (searchAlbums?.length > 0) && <div className='search_album_container '>
                     <AlbumList albumListData={searchAlbums} callFrom = "searchPage" />
                 </div>
             }
 
             {
-                (searchTrack.length > 0) && <TrackLists callFrom='searchPage' tracksArr={searchTrack} />
+                (searchTrack?.length > 0) && <TrackLists callFrom='searchPage' tracksArr={searchTrack} />
             }
         </div>
     )

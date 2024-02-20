@@ -37,11 +37,12 @@ const Album = () => {
 
   return (
     <>
-      <div className='py-3 px-[5%]'>
+      <div className='p-1.5 300px:py-3 300px:px-2'>
         {albumMeta && <AlbumCard albumCardData={albumMeta} />}
       </div>
-
-      {albumMeta && <TrackLists tracksArr={albumData} albumImg={albumMeta?.albumCoverArt} />}
+      <div className='p-1.5 300px:py-3 300px:px-2'>
+        {albumMeta && <TrackLists tracksArr={albumData} albumImg={albumMeta?.albumCoverArt} />}
+      </div>
 
     </>
   )

@@ -43,7 +43,6 @@ const ControlPannel = () => {
 
 
     useEffect(() => {
-        console.log("currentlyPlaying -> ", currentlyPlaying)
         setCurrentTrack(currentlyPlaying)
     }, [currentlyPlaying?.item?.name])
 
@@ -128,22 +127,34 @@ const ControlPannel = () => {
     return (
         <div className='w-full h-20 max-h-20 p-1 bg-white bg-opacity-50 z-[1] flex items-center relative gap-1'>
 
-            <div className='w-2/3 600px:w-[30%] h-full flex items-center justify-center gap-1'>
+            <div className='flex-1 400px:w-2/3 600px:w-[30%] h-full flex items-center justify-center gap-1'>
 
                 <img src={currentlyPlaying?.item?.album?.images[0]?.url || 'https://storage.googleapis.com/pr-newsroom-wp/1/2018/11/Spotify_Logo_CMYK_Black.png'} className='w-16 h-full object-contain bg-gray-800' />
 
-                <div className='h-full flex-1 w-[15%] overflow-hidden flex flex-col items-center justify-center gap-2'>
+                <div className='h-full flex-1 overflow-hidden flex flex-col justify-center gap-2'>
 
-                    <h2 className='w-fit text-base translate-x-full animate-[text_scroll_animation 15s linear infinite]'> {currentlyPlaying?.item?.name || ""} </h2>
+                    <h2 className={`w-fit text-base whitespace-nowrap ${currentlyPlaying?.item?.name?.length > 24 && "300px:animate-scroll"}`}> {currentlyPlaying?.item?.name || ""} </h2>
 
-                    <p className='text-base translate-x-full animate-[text_scroll_animation 15s linear infinite] w-fit' > {currentlyPlaying?.item?.artists && setArtistsToPannel(currentlyPlaying.item.artists)} </p>
+                    <p className={`text-base w-fit ${currentlyPlaying?.item?.artists?.length > 3 && "300px:animate-scroll"}`} > {currentlyPlaying?.item?.artists && setArtistsToPannel(currentlyPlaying.item.artists)} </p>
 
                 </div>
 
 
                 <div className='h-full flex gap-2 items-center justify-evenly'>
-                    <MdOutlineFavorite className='text-xl w-6 h-6' />
-                    <MdPlayArrow className='text-xl w-6 h-6 inline-block 600px:hidden' />
+                    {/* <MdOutlineFavorite className='text-xl w-6 h-6' /> */}
+                    {
+                        currentlyPlaying?.is_playing ? (
+                            <MdPauseCircleFilled className='h-6 w-6 400px:h-10 400px:w-10 600px:hidden text-2xl cursor-pointer' onClick={() => { setMusicState('pause') }} />
+                        ) : (
+                            <MdPlayCircleFilled className='h-6 w-6 400px:h-10 400px:w-10 600px:hidden text-2xl cursor-pointer' onClick={() => {
+                                setMusicState('play', {
+                                    "context_uri": currentlyPlaying?.context?.uri,
+                                    "offset": { position: currentlyPlaying?.progress_ms },
+                                    "position_ms": 0
+                                })
+                            }} />
+                        )
+                    }
                 </div>
 
 
@@ -161,9 +172,9 @@ const ControlPannel = () => {
 
                 {
                     currentlyPlaying?.is_playing ? (
-                        <MdPauseCircleFilled className='h-6 w-6 text-2xl cursor-pointer' onClick={() => { setMusicState('pause') }} />
+                        <MdPauseCircleFilled className='h-10 w-10 text-2xl cursor-pointer' onClick={() => { setMusicState('pause') }} />
                     ) : (
-                        <MdPlayCircleFilled className='h-6 w-6 text-2xl cursor-pointer' onClick={() => {
+                        <MdPlayCircleFilled className='h-10 w-10 text-2xl cursor-pointer' onClick={() => {
                             setMusicState('play', {
                                 "context_uri": currentlyPlaying?.context?.uri,
                                 "offset": { position: currentlyPlaying?.progress_ms },
@@ -179,9 +190,9 @@ const ControlPannel = () => {
 
             </div>
 
-            <div className='w-[30%] h-full flex flex-row items-center justify-center gap-[2%]' >
+            <div className='w-[30%] h-full hidden 400px:flex flex-row items-center justify-center gap-[2%]' >
 
-                <MdVolumeDown />
+                <MdVolumeDown className='w-6 h-6'/>
 
                 {/* apperance none can change buttons etc... */}
                 <input type="range" defaultValue={0} value={volumeValue} min={0} max={100} step={5} marks="true" className='w-[70%] text-red-400 h-2' onChange={(e) => setVolumeValue(e.target.value)} />

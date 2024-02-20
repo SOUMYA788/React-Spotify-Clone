@@ -8,6 +8,8 @@ module.exports = {
     extend: {
       screens: {
         '300px': '300px',
+        '400px': '400px',
+        '500px': '500px',
         '600px': '600px',
         "640px": '640px',
         '734px': '734px',

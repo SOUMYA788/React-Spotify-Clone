@@ -27,11 +27,15 @@ const AlbumList = ({ albumListData, callFrom }) => {
     return (
         <div className='w-full mt-5 px-2'>
 
-            <h2 className='capitalize text-sm 600px:text-2xl px-2 py-1.5 600px:px-2 600px:py-4 bg-slate-200 bg-opacity-50 backdrop-blur-sm my-1'>
-                Recently Played
-            </h2>
+            {
+                callFrom !== "searchPage" && <h2 className='capitalize text-sm 600px:text-2xl px-2 py-1.5 600px:px-2 600px:py-4 bg-slate-200 bg-opacity-50 backdrop-blur-sm my-2 mb-4'>
+                    Recently Played
+                </h2>
+            }
 
-            <div className='w-full flex flex-col 300px:flex-row flex-wrap gap-3 pt-1 px-3'>
+
+
+            <div className='w-full flex flex-wrap gap-3 pt-1 px-3'>
                 {
                     uniqueAlbums.length > 0 && uniqueAlbums.map((cardDataElement, indx) => {
                         const albumCardData = {
